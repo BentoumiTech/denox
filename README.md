@@ -1,6 +1,6 @@
 # DenoX
 
-![GitHub](https://img.shields.io/github/license/BentoumiTech/denox?style=flat-square)![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square)![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bentoumitech/denox/ci?style=flat-square)
+![GitHub](https://img.shields.io/github/license/BentoumiTech/denox?style=flat-square) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bentoumitech/denox/ci?style=flat-square)
 
 DenoX adds workspace support for your Deno projects.
 
