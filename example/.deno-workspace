@@ -4,6 +4,6 @@ scripts:
 globals:
   permissions:
       allow-read:
-        - './test'
+        - './files'
 
 
