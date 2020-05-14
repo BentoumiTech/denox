@@ -15,5 +15,6 @@ jobs:
         fetch-depth: '0'
     - uses: denolib/setup-deno@master
       with:
-        deno-version: 1.0.0-rc3
+        deno-version: 1.0.0
     - run: deno install -Af denox.ts
+    - run: deno test -A --failfast

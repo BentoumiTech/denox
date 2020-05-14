@@ -2,25 +2,25 @@
 
 ![GitHub](https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master)
 
-DenoX adds workspace support for your Deno projects.
+DenoX is a script runner and workspace wrapper for Deno
 
 In a similar fashion to `package.json` in NodeJS, you can specify a list of scripts and their respective permissions.
 
-Instead of having to rely on `--allow-all` due to the tedious task of rewriting all your permissions in the shell, you can now write your permissions once in a `.deno-workspace` file.
+Instead of having to rely on `--allow-all` due to the tedious task of rewriting all your permissions in the shell, you can now write your permissions once in a `deno-workspace` file.
 
 ## Installation
 
 Prerequisites: [Deno](https://github.com/denoland/deno_install) (>=1.0.0)
 
-`$ deno install -Af https://denopkg.com/BentoumiTech/denox/denox.ts`
+`$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts`
 
 You can now access `denox`
 
 ## Getting Started
 
-Create a file named `.deno-workspace` at the root of your Deno project.
+Create a file named `deno-workspace` at the root of your Deno project.
 
-> Note: The `.deno-workspace` file uses YAML
+> Note: The `deno-workspace` file uses YAML
 
 ### Scripts
 

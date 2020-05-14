@@ -1,28 +1,28 @@
-import { parseYaml } from "../deps.ts";
-
-import { error, constructPermissionsArray } from "./utils.ts";
-import { upgradeVersionMessage } from "./upgrade_version.ts";
-import { IDenoWorkspace } from "./interfaces.ts";
 import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
-async function run(command: string, args: string[]) {
+import * as consolex from "./utils/consolex.ts";
+import { ScriptNotFoundError } from "./utils/DenoErrors.ts";
+
+import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
+
+import { constructCLIArguments } from "./parser/deno_arguments.ts";
+import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
+
+async function run(script: string, args: string[]) {
   try {
-    const denoWorkspaceYamlData = Deno.readFileSync(".deno-workspace");
-    const decoder = new TextDecoder("utf-8");
-    const denoWorkspaceYaml = decoder.decode(denoWorkspaceYamlData);
-    const denoWorkspace = parseYaml(denoWorkspaceYaml) as IDenoWorkspace;
+    const workspace = loadDenoWorkspace();
 
-    const denoWorkspaceCommand = denoWorkspace.scripts[command];
+    const workspaceScript = workspace.scripts[script];
 
-    if (denoWorkspaceCommand === undefined) {
-      throw new Error(
-        `Command "${command}" not found please add it to the .deno-workspace file`,
-      );
+    if (workspaceScript === undefined) {
+      throw new ScriptNotFoundError(script);
     }
 
-    const permissions = constructPermissionsArray({
-      ...denoWorkspace.globals.permissions,
-      ...denoWorkspaceCommand.permissions,
+    const globalPermissions = workspace?.globals?.permissions
+
+    const permissions = constructCLIArguments({
+      ...globalPermissions,
+      ...workspaceScript.permissions,
     });
 
     const p = Deno.run({
@@ -30,7 +30,7 @@ async function run(command: string, args: string[]) {
         "deno",
         "run",
         ...permissions,
-        denoWorkspaceCommand.file,
+        workspaceScript.file,
         ...args,
       ],
     });
@@ -41,15 +41,13 @@ async function run(command: string, args: string[]) {
 
     Deno.exit(code);
   } catch (e) {
-    if (e instanceof Deno.errors.NotFound) {
-      return error(`Couldn't find a .deno-workspace file in "${Deno.cwd()}"`);
-    } else if (e instanceof Deno.errors.PermissionDenied) {
-      return error(`
+    if (e instanceof Deno.errors.PermissionDenied) {
+      return consolex.error(`
         Please reinstall denox with the correct pemissions
-        deno install -Af https://denopkg.com/BentoumiTech/denox/denox.ts
+        deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
       `);
     }
-    return error(e.message);
+    return consolex.error(e.message);
   }
 }
 

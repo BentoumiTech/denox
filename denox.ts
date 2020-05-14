@@ -1,7 +1,7 @@
 import { cac } from "./deps.ts";
 
 import run from "./src/run.ts";
-import { error } from "./src/utils.ts";
+import { error } from "./src/utils/consolex.ts";
 import { CURRENT_VERSION } from "./src/const.ts";
 
 const cli = cac("denox");
@@ -12,7 +12,7 @@ cli
     "Run a script",
     { allowUnknownOptions: true, ignoreOptionDefaultValue: true },
   )
-  .example("denox run start args1 args2")
+  .example("denox run start arg1 arg2")
   .action(run);
 
 // @ts-ignore

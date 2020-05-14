@@ -1,0 +1,9 @@
+scripts:
+  start:
+    file: .deno-workspace.ts
+    permissions:
+      reload: true
+globals:
+  permissions:
+      allow-read:
+        - './files'
