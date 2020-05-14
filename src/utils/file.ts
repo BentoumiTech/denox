@@ -1,5 +1,3 @@
-import { WorkspaceNotFoundError } from "./DenoErrors.ts";
-
 function readFirstExistingFile(files: string[]): string {
   const [firstFile, ...restFiles] = files;
   try {
@@ -11,7 +9,6 @@ function readFirstExistingFile(files: string[]): string {
       if (restFiles.length > 0) {
         return readFirstExistingFile(restFiles);
       }
-      throw new WorkspaceNotFoundError();
     }
 
     throw e;
