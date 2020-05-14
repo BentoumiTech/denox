@@ -14,10 +14,10 @@ class WorkspaceNotFoundError extends DenoXError {
   }
 }
 
-class CommandNotFoundError extends DenoXError {
-  constructor(command: string) {
+class ScriptNotFoundError extends DenoXError {
+  constructor(script: string) {
     super(
-      `Command "${command}" not found please add it to the deno-workspace file`,
+      `Script "${script}" not found please add it to deno-workspace file`,
     );
   }
 }
@@ -33,7 +33,7 @@ class WorkspaceFileIsMalformed extends DenoXError {
 }
 
 export {
-  CommandNotFoundError,
+  ScriptNotFoundError,
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
 };
