@@ -12,7 +12,7 @@ Instead of having to rely on `--allow-all` due to the tedious task of rewriting 
 
 Prerequisites: [Deno](https://github.com/denoland/deno_install) (>=1.0.0)
 
-`$ deno install -Af https://denopkg.com/BentoumiTech/denox/denox.ts`
+`$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts`
 
 You can now access `denox`
 
