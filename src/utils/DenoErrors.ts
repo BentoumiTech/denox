@@ -17,9 +17,19 @@ class WorkspaceNotFoundError extends DenoXError {
 class CommandNotFoundError extends DenoXError {
   constructor(command: string) {
     super(
-      `Command "${command}" not found please add it to the deno-workspace file`
+      `Command "${command}" not found please add it to the deno-workspace file`,
     );
   }
 }
 
-export { CommandNotFoundError, WorkspaceNotFoundError };
+class WorkspaceFileIsMalformed extends DenoXError {
+  constructor(parserMessage: string) {
+    super(`
+      "deno-workspace" file is not valid
+
+      ${parserMessage}
+    `);
+  }
+}
+
+export { CommandNotFoundError, WorkspaceNotFoundError, WorkspaceFileIsMalformed };
