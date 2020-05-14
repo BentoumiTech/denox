@@ -1,6 +1,14 @@
-import { assertThrows, assertEquals, assertArrayContains, resolve } from "../../../dev_deps.ts";
+import {
+  assertThrows,
+  assertEquals,
+  assertArrayContains,
+  resolve,
+} from "../../../dev_deps.ts";
 import { loadDenoWorkspace } from "../../../src/parser/deno_workspace.ts";
-import { WorkspaceNotFoundError, WorkspaceFileIsMalformed } from "../../../src/utils/DenoErrors.ts";
+import {
+  WorkspaceNotFoundError,
+  WorkspaceFileIsMalformed,
+} from "../../../src/utils/DenoErrors.ts";
 
 function changeAndRestoreCWD(directory: string, assertion: () => void) {
   const cwd = Deno.cwd();
@@ -12,17 +20,26 @@ function changeAndRestoreCWD(directory: string, assertion: () => void) {
 }
 
 Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", () => {
-  changeAndRestoreCWD('test/fixture/no_workspace', () => {
-    assertThrows(() =>{
-      loadDenoWorkspace()
+  changeAndRestoreCWD("test/fixture/no_workspace", () => {
+    assertThrows(() => {
+      loadDenoWorkspace();
     }, WorkspaceNotFoundError);
   });
 });
 
 Deno.test("throw WorkspaceMalformed when workspace file is not valid", () => {
-  changeAndRestoreCWD('test/fixture/malformed', () => {
-    assertThrows(() =>{
-      loadDenoWorkspace()
+  changeAndRestoreCWD("test/fixture/malformed", () => {
+    assertThrows(() => {
+      loadDenoWorkspace();
     }, WorkspaceFileIsMalformed);
+  });
+});
+
+Deno.test("load valid workspace", () => {
+  changeAndRestoreCWD("test/fixture/single_script", () => {
+    assertEquals(loadDenoWorkspace(), {
+      scripts: { start: { file: "main.ts", permissions: { reload: true } } },
+      globals: { permissions: { "allow-read": ["./files"] } },
+    });
   });
 });

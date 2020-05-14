@@ -1,0 +1,11 @@
+scripts:
+  start:
+    file: main.ts
+    permissions:
+      reload: true
+globals:
+  permissions:
+      allow-read:
+        - './files'
+
+
