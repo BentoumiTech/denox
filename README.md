@@ -4,23 +4,51 @@
 
 DenoX is a script runner and workspace wrapper for Deno
 
-In a similar fashion to `package.json` in NodeJS, you can specify a list of scripts and their respective permissions.
+Using DenoX, you can set up your deno workspace scripts permissions and options in declarative code.
 
-Instead of having to rely on `--allow-all` due to the tedious task of rewriting all your permissions in the shell, you can now write your permissions once in a `deno-workspace` file.
+In short, it allows you to to replace having to write this all the time:
 
-## Installation
+```bash
+$ deno run --allow-read --allow-write --allow-net main.ts
+```
+
+with this
+
+```bash
+$ denox run start
+```
+
+## Install/Upgrade
 
 Prerequisites: [Deno](https://github.com/denoland/deno_install) (>=1.0.0)
 
-`$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts`
+```bash
+$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
+$ denox --help
+denox v0.2.0
 
-You can now access `denox`
+Usage:
+  $ denox <command> [options]
+
+Commands:
+  run <script> [...args]  Run a script
+
+For more info, run any command with the `--help` flag:
+  $ denox run --help
+
+Options:
+  -h, --help     Display this message 
+  -v, --version  Display version number 
+
+Examples:
+denox run start
+```
 
 ## Getting Started
 
 Create a file named `deno-workspace` at the root of your Deno project.
 
-> Note: The `deno-workspace` file uses YAML
+> Note: `deno-workspace` format is YAML
 
 ### Scripts
 
