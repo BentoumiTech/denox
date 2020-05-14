@@ -7,7 +7,7 @@ import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 async function run(command: string, args: string[]) {
   try {
-    const denoWorkspaceYamlData = Deno.readFileSync(".deno-workspace");
+    const denoWorkspaceYamlData = Deno.readFileSync("deno-workspace");
     const decoder = new TextDecoder("utf-8");
     const denoWorkspaceYaml = decoder.decode(denoWorkspaceYamlData);
     const denoWorkspace = parseYaml(denoWorkspaceYaml) as IDenoWorkspace;
@@ -16,7 +16,7 @@ async function run(command: string, args: string[]) {
 
     if (denoWorkspaceCommand === undefined) {
       throw new Error(
-        `Command "${command}" not found please add it to the .deno-workspace file`,
+        `Command "${command}" not found please add it to the deno-workspace file`,
       );
     }
 
@@ -42,7 +42,7 @@ async function run(command: string, args: string[]) {
     Deno.exit(code);
   } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
-      return error(`Couldn't find a .deno-workspace file in "${Deno.cwd()}"`);
+      return error(`Couldn't find deno-workspace file in "${Deno.cwd()}"`);
     } else if (e instanceof Deno.errors.PermissionDenied) {
       return error(`
         Please reinstall denox with the correct pemissions
