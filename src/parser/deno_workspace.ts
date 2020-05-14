@@ -4,13 +4,16 @@ import { DENO_WORKSPACE_FILES } from "../const.ts";
 import { IDenoWorkspace } from "../interfaces.ts";
 
 import { readFirstExistingFile } from "../utils/file.ts";
-import { WorkspaceNotFoundError, WorkspaceFileIsMalformed } from "../utils/DenoErrors.ts";
+import {
+  WorkspaceNotFoundError,
+  WorkspaceFileIsMalformed,
+} from "../utils/DenoErrors.ts";
 
 function loadDenoWorkspace() {
   try {
     const denoWorkspaceYaml = readFirstExistingFile(DENO_WORKSPACE_FILES);
     return parseYaml(denoWorkspaceYaml) as IDenoWorkspace;
-  } catch(e) {
+  } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
       throw new WorkspaceNotFoundError();
     }

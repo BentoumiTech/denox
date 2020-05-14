@@ -32,4 +32,8 @@ class WorkspaceFileIsMalformed extends DenoXError {
   }
 }
 
-export { CommandNotFoundError, WorkspaceNotFoundError, WorkspaceFileIsMalformed };
+export {
+  CommandNotFoundError,
+  WorkspaceNotFoundError,
+  WorkspaceFileIsMalformed,
+};
