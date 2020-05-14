@@ -8,11 +8,11 @@ interface IDenoWorkspace {
   scripts: {
     [key: string]: {
       file: string;
-      permissions: IWorkspaceOptions;
+      permissions?: IWorkspaceOptions;
     };
   };
-  globals: {
-    permissions: IWorkspaceOptions;
+  globals?: {
+    permissions?: IWorkspaceOptions;
   };
 }
 

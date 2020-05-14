@@ -1,26 +1,28 @@
 import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
-import { CommandNotFoundError } from "./utils/DenoErrors.ts";
+import { ScriptNotFoundError } from "./utils/DenoErrors.ts";
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
 import { constructCLIArguments } from "./parser/deno_arguments.ts";
 import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
 
-async function run(command: string, args: string[]) {
+async function run(script: string, args: string[]) {
   try {
-    const denoWorkspace = loadDenoWorkspace();
+    const workspace = loadDenoWorkspace();
 
-    const denoWorkspaceCommand = denoWorkspace.scripts[command];
+    const workspaceScript = workspace.scripts[script];
 
-    if (denoWorkspaceCommand === undefined) {
-      throw new CommandNotFoundError(command);
+    if (workspaceScript === undefined) {
+      throw new ScriptNotFoundError(script);
     }
 
+    const globalPermissions = workspace?.globals?.permissions
+
     const permissions = constructCLIArguments({
-      ...denoWorkspace.globals.permissions,
-      ...denoWorkspaceCommand.permissions,
+      ...globalPermissions,
+      ...workspaceScript.permissions,
     });
 
     const p = Deno.run({
@@ -28,7 +30,7 @@ async function run(command: string, args: string[]) {
         "deno",
         "run",
         ...permissions,
-        denoWorkspaceCommand.file,
+        workspaceScript.file,
         ...args,
       ],
     });
