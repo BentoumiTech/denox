@@ -1,4 +1,6 @@
 scripts:
   start:
     file: main.ts
+  develop:
+    file: develop.ts
 

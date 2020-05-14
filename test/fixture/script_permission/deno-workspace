@@ -1,0 +1,6 @@
+scripts:
+  start:
+    file: main.ts
+    permissions:
+      allow-read:
+        - './files'

@@ -1,0 +1,9 @@
+scripts:
+  start:
+    file: main.ts
+    permissions:
+      allow-net: jsonplaceholder.typicode.com
+globals:
+  permissions:
+    allow-read:
+      - './files'
