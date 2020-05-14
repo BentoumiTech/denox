@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master)
 
-DenoX adds workspace support for your Deno projects.
+DenoX is a script runner and workspace wrapper for Deno
 
 In a similar fashion to `package.json` in NodeJS, you can specify a list of scripts and their respective permissions.
 
