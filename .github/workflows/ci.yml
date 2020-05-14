@@ -17,3 +17,4 @@ jobs:
       with:
         deno-version: 1.0.0
     - run: deno install -Af denox.ts
+    - run: deno test -A --failfast
