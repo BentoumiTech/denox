@@ -1,4 +1,4 @@
-import { Semver } from "./lib/semver.ts";
+import { Semver } from "./semver.ts";
 
 async function getLatestVersion(repoName: string) {
   const response = await fetch(`https://api.github.com/repos/${repoName}/tags`);
@@ -16,9 +16,9 @@ async function upgradeVersionMessage(currentVersion: string, repoName: string) {
   if (!isCurrentLatestVersion(currentVersion, latestVersion)) {
     console.log(`
       denox update available from ${currentVersion} to ${latestVersion}
-      To upgrade run deno install -Af https://denopkg.com/BentoumiTech/denox/denox.ts
+      To upgrade run deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
     `);
   }
 }
 
-export { upgradeVersionMessage, getLatestVersion, isCurrentLatestVersion };
+export { upgradeVersionMessage };
