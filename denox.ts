@@ -12,7 +12,7 @@ cli
     "Run a script",
     { allowUnknownOptions: true, ignoreOptionDefaultValue: true },
   )
-  .example("denox run start args1 args2")
+  .example("denox run start arg1 arg2")
   .action(run);
 
 // @ts-ignore
