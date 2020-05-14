@@ -1,7 +1,7 @@
 import { cac } from "./deps.ts";
 
 import run from "./src/run.ts";
-import { error } from "./src/utils.ts";
+import { error } from "./src/utils/consolex.ts";
 import { CURRENT_VERSION } from "./src/const.ts";
 
 const cli = cac("denox");
