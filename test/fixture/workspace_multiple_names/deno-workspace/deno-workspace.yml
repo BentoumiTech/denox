@@ -1,9 +1,9 @@
 scripts:
   start:
-    file: main.ts
+    file: deno-workspace.yml.ts
+    permissions:
+      reload: true
 globals:
   permissions:
       allow-read:
         - './files'
-
-

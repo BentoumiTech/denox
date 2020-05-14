@@ -35,11 +35,25 @@ Deno.test("throw WorkspaceMalformed when workspace file is not valid", () => {
   });
 });
 
-Deno.test("load valid workspace", () => {
-  changeAndRestoreCWD("test/fixture/single_script", () => {
-    assertEquals(loadDenoWorkspace(), {
-      scripts: { start: { file: "main.ts", permissions: { reload: true } } },
-      globals: { permissions: { "allow-read": ["./files"] } },
+
+
+
+Deno.test("load valid workspaces with correct order of priority", () => {
+  const tests = [
+    "deno-workspace",
+    "deno-workspace.yml",
+    "deno-workspace.yaml",
+    ".deno-workspace",
+    ".deno-workspace.yml",
+    ".deno-workspace.yaml"
+  ];
+
+  tests.forEach((workspaceFolderFile) => {
+    changeAndRestoreCWD(`test/fixture/workspace_multiple_names/${workspaceFolderFile}`, () => {
+      assertEquals(loadDenoWorkspace(), {
+        scripts: { start: { file: `${workspaceFolderFile}.ts`, permissions: { reload: true } } },
+        globals: { permissions: { "allow-read": ["./files"] } },
+      });
     });
   });
 });
