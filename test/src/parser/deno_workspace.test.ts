@@ -31,8 +31,8 @@ Deno.test("throw WorkspaceMalformed when workspace file is not valid", async () 
 
 Deno.test("load valid workspaces with correct order of priority", async () => {
   const files = [
-    "deno-workspace",
     "deno-workspace.yml",
+    "deno-workspace",
     "deno-workspace.yaml",
     ".deno-workspace",
     ".deno-workspace.yml",

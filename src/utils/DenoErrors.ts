@@ -8,7 +8,7 @@ class DenoXError extends Error {
 class WorkspaceNotFoundError extends DenoXError {
   constructor() {
     super(`
-      deno-workspace file not found in "${Deno.cwd()}"
+      deno-workspace.yml file not found in "${Deno.cwd()}"
       Run "denox init" in your project root directory.
     `);
   }
@@ -17,7 +17,7 @@ class WorkspaceNotFoundError extends DenoXError {
 class ScriptNotFoundError extends DenoXError {
   constructor(script: string) {
     super(
-      `Script "${script}" not found please add it to deno-workspace file`,
+      `Script "${script}" not found please add it to deno-workspace.yml file`,
     );
   }
 }
@@ -25,7 +25,7 @@ class ScriptNotFoundError extends DenoXError {
 class WorkspaceFileIsMalformed extends DenoXError {
   constructor(parserMessage: string) {
     super(`
-      "deno-workspace" file is not valid
+      "deno-workspace.yml" file is not valid
 
       ${parserMessage}
     `);
