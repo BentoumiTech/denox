@@ -1,16 +1,26 @@
 <h1 align="center">
   <br>
   <a href="https://github.com/BentoumiTech/denox" alt="DenoX">
-    <img src="https://raw.githubusercontent.com/BentoumiTech/denox/master/.github/img/denox-logo.png" height="150" alt="Deno script runner">
+    <img style="max-height:150px; height: 100%; max-width: 475px; width: 100%;" src="https://raw.githubusercontent.com/BentoumiTech/denox/master/.github/img/denox-logo.png" alt="Deno script runner">
   </a>
   <br/>
 </h1>
 <p align="center">
-  <img src="https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square" alt="MIT License"/>
-  <img src="https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square" alt="latest SemVer"/>
   <img src="https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master" alt="GitHub Workflow Status"/>
+  <img src="https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square" alt="latest SemVer"/>
+  <img src="https://img.shields.io/badge/contribution-welcome-brightgreen.svg?style=flat-square" alt="Contribution welcome"/>
+  <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square" alt="Commitizen friendly"/>
+  <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square" alt="Commitizen friendly"/>
+  <img src="https://img.shields.io/badge/semantic-release-e10079.svg?style=flat-square" alt="Semantic release"/>
+  <img src="https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square" alt="MIT License"/>
   <br />
-  <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" height="300" alt="DenoX screenshot example">
+  <a href="#installupgrade">Install/Upgrade</a> •
+  <a href="#overview">Overview</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#getting-started">Getting started</a> •
+  <a href="#contributing">Contributing</a>
+  <br />
+  <img style="max-height:300px; height: 100%; max-width: 600px; width: 100%;" src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" alt="DenoX screenshot example">
 </p>
 
 ## Install/Upgrade
@@ -70,11 +80,11 @@ denox run start
 
 Create a file named `deno-workspace.yml` at the root of your Deno project.
 
-> Note: `deno-workspace.yml` format is YAML
+> Note: `deno-workspace.yml` format is YAML but it also supports JSON
 
 ### Scripts
 
-Defines a set of deno scripts you can run
+You can easily run scripts using denox by adding them to the "scripts" field in `deno-workspace.yml` and run them with `denox run <script-name>`.
 
 ##### Example:
 
@@ -92,41 +102,21 @@ scripts:
       allow-net: localhost
 ```
 
-### Globals
+### Options
 
-Options set under the `globals` property gets added to all scripts.
+Scripts can be extended with options.
 
-> Note: If an option is specified globally as well as for a script the value in the `scripts` block will overwrite the one in the `globals` block
+#### Permissions:
 
-##### Example:
+Permissions options will add the corresponding deno permission flag with it's value to the deno command.
 
-```yaml
-scripts:
-  # "denox run start" --allow-read permission overwrite the globals permission
-  start:
-    file: main.ts
-    permissions:
-      allow-net: example.com
-      allow-read: false
-  # "denox run develop" inherit the --allow-read permission from the globals permissions
-  develop:
-    file: main.ts
-    permissions:
-      allow-net: localhost
-globals:
-  permissions:
-    allow-read: true
-```
-
-### Permissions
-
-Permissions value either accept a string, array of strings or boolean.
+It supports string, array of strings and boolean.
 
 ##### Example:
 
 ```yaml
 scripts:
-  # "denox run start" will translate to "deno run --allow-net=example.com github.com --allow-env --allow-read=./files main.ts"
+  # "denox run start" will execute "deno run --allow-net=example.com github.com --allow-env --allow-read=./files main.ts"
   start:
     file: main.ts
     permissions:
@@ -137,3 +127,26 @@ scripts:
       allow-read: ./files
       allow-write: false
 ```
+
+### Globals
+
+Options added in "globals" field gets added to all scripts.
+
+> Note: If a same option is set in a script and also set globally the script scoped value overwrite the global one
+
+##### Example:
+
+```yaml
+scripts:
+  # "denox run develop" inherit the --allow-read permission from the globals permissions
+  # "deno run --all-read main.ts"
+  develop:
+    file: main.ts
+globals:
+  permissions:
+    allow-read: true
+```
+
+## Contributing
+
+Please take a look at our [contributing](./CONTRIBUTING.md) guidelines if you're interested in helping!
