@@ -6,7 +6,7 @@ import { loadDenoWorkspace } from "../../../src/parser/deno_workspace.ts";
 import {
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
-} from "../../../src/utils/DenoErrors.ts";
+} from "../../../src/utils/DenoXErrors.ts";
 import { changeAndRestoreCWD } from "../../utils/cwd.ts";
 
 Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", async () => {
@@ -41,9 +41,9 @@ Deno.test("load valid workspaces with correct order of priority", async () => {
       async () => {
         assertEquals(loadDenoWorkspace(), {
           scripts: {
-            start: { file: `${file}.ts`, permissions: { reload: true } },
+            start: { file: `${file}.ts`, deno_options: { reload: true } },
           },
-          globals: { permissions: { "allow-read": ["./files"] } },
+          globals: { deno_options: { "allow-read": ["./files"] } },
         });
       },
     );

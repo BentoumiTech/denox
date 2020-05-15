@@ -2,7 +2,7 @@ scripts:
   start:
     file: main.ts
 globals:
-  permissions:
+  deno_options:
       allow-read:
         - './files'
 

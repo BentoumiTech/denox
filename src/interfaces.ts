@@ -1,19 +1,23 @@
-type OptionValueType = string[] | string | boolean;
+type DenoOptionValue = unknown;
 
-interface IWorkspaceOptions {
-  [key: string]: OptionValueType;
+type DenoOptionsEntries = {
+  [key: string]: DenoOptionValue;
 }
 
-interface IDenoWorkspace {
+type WorkspaceOptions = {
+  deno_options?: DenoOptionsEntries;
+};
+
+type WorkspaceScript = {
+  file: string;
+} & WorkspaceOptions;
+
+type WorkspaceGlobal = WorkspaceOptions;
+
+type DenoWorkspace = {
   scripts: {
-    [key: string]: {
-      file: string;
-      permissions?: IWorkspaceOptions;
-    };
+    [key: string]: WorkspaceScript;
   };
-  globals?: {
-    permissions?: IWorkspaceOptions;
-  };
+  globals?: WorkspaceGlobal;
 }
 
-export { IWorkspaceOptions, IDenoWorkspace, OptionValueType };

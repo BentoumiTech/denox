@@ -7,7 +7,7 @@ import { readFirstExistingFile } from "../utils/file.ts";
 import {
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
-} from "../utils/DenoErrors.ts";
+} from "../utils/DenoXErrors.ts";
 
 function loadDenoWorkspace() {
   try {
