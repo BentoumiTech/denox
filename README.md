@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   <a href="https://github.com/BentoumiTech/denox" alt="DenoX">
-    <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/denox-logo.png" alt="Deno script runner">
+    <img src="https://raw.githubusercontent.com/BentoumiTech/denox/master/.github/img/denox-logo.png" height="150" alt="Deno script runner">
   </a>
   <br/>
 </h1>
@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square" alt="latest SemVer"/>
   <img src="https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master" alt="GitHub Workflow Status"/>
   <br />
-  <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" alt="DenoX screenshot example">
+  <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" height="300" alt="DenoX screenshot example">
 </p>
 
 
