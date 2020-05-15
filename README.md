@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   <a href="https://github.com/BentoumiTech/denox" alt="DenoX">
-    <img style="max-height:150px; height: 100%; max-width: 475px; width: 100%;" src="https://raw.githubusercontent.com/BentoumiTech/denox/master/.github/img/denox-logo.png" alt="Deno script runner">
+    <img height="100%" width="475px" src="https://raw.githubusercontent.com/BentoumiTech/denox/master/.github/img/denox-logo.png" alt="Deno script runner">
   </a>
   <br/>
 </h1>
@@ -14,13 +14,15 @@
   <img src="https://img.shields.io/badge/semantic-release-e10079.svg?style=flat-square" alt="Semantic release"/>
   <img src="https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square" alt="MIT License"/>
   <br />
+  <br />
   <a href="#installupgrade">Install/Upgrade</a> •
   <a href="#overview">Overview</a> •
   <a href="#usage">Usage</a> •
   <a href="#getting-started">Getting started</a> •
   <a href="#contributing">Contributing</a>
   <br />
-  <img style="max-height:300px; height: 100%; max-width: 600px; width: 100%;" src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" alt="DenoX screenshot example">
+  <br />
+  <img height="100%" width="600px" src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" alt="DenoX screenshot example">
 </p>
 
 ## Install/Upgrade
