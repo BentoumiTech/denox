@@ -1,6 +1,6 @@
 scripts:
   start:
-    file: deno-workspace.yml.ts
+    file: deno-workspace.ts
     permissions:
       reload: true
 globals:
