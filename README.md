@@ -1,22 +1,40 @@
-# DenoX
+<h1 align="center">
+  <br>
+  <a href="https://github.com/BentoumiTech/denox" alt="DenoX">
+    <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/denox-logo.png" alt="Deno script runner">
+  </a>
+  <br/>
+</h1>
+<p align="center">
+  <img src="https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square" alt="MIT License"/>
+  <img src="https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square" alt="latest SemVer"/>
+  <img src="https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master" alt="GitHub Workflow Status"/>
+  <br />
+  <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" alt="DenoX screenshot example">
+</p>
 
-![GitHub](https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/BentoumiTech/denox/CI/master)
+
+## Overview
 
 DenoX is a script runner and workspace wrapper for Deno
 
-Using DenoX, you can set up your deno workspace scripts permissions and options in declarative code.
+Using DenoX, you can set up your workspace scripts permissions and options in declarative code.
 
-In short, it allows you to to replace having to write this all the time:
+In short, it allows you to to replace this:
 
 ```bash
 $ deno run --allow-read --allow-write --allow-net main.ts
 ```
 
-with this
+with this:
 
 ```bash
 $ denox run start
 ```
+
+- **DRY** Only write your permissions and options once.
+- **Packaged** Your code can run on a different machine with a short single command `denox run start`
+- **Extensible** :soon:
 
 ## Install/Upgrade
 
@@ -37,8 +55,8 @@ For more info, run any command with the `--help` flag:
   $ denox run --help
 
 Options:
-  -h, --help     Display this message 
-  -v, --version  Display version number 
+  -h, --help     Display this message
+  -v, --version  Display version number
 
 Examples:
 denox run start
@@ -46,9 +64,9 @@ denox run start
 
 ## Getting Started
 
-Create a file named `deno-workspace` at the root of your Deno project.
+Create a file named `deno-workspace.yml` at the root of your Deno project.
 
-> Note: `deno-workspace` format is YAML
+> Note: `deno-workspace.yml` format is YAML
 
 ### Scripts
 
