@@ -84,11 +84,11 @@ Create a file named `deno-workspace.yml` at the root of your Deno project.
 
 > Note: `deno-workspace.yml` format is YAML but it also supports JSON
 
-### Scripts
+## Scripts
 
 You can easily run scripts using denox by adding them to the "scripts" field in `deno-workspace.yml` and run them with `denox run <script-name>`.
 
-##### Example:
+### Example:
 
 ```yaml
 scripts:
@@ -105,17 +105,17 @@ scripts:
       reload: true
 ```
 
-### Options
+## Options
 
 Scripts can be extended with options.
 
-#### deno_options:
+### deno_options:
 
 Deno options will add the corresponding deno argument with it's value to the deno command.
 
 It supports string, array of strings and boolean.
 
-##### Example:
+### Example:
 
 ```yaml
 scripts:
@@ -131,7 +131,7 @@ scripts:
       allow-write: false
 ```
 
-##### Compatibility
+### Compatibility
 
 It currently support all the options that are accepted by the `deno run` command. For more informations refer to `deno run --help`.
 
@@ -141,13 +141,13 @@ allow-write, cached-only, cert, config, importmap, inspect, inspect-brk, lock, l
 log-level, no-remote, quiet, reload, seed, unstable, v8-flags
 ```
 
-### Globals
+## Globals
 
 Options added in "globals" field gets added to all scripts.
 
 > Note: If a same option is set in a script and also set globally the script scoped value overwrite the global one
 
-##### Example:
+### Example:
 
 ```yaml
 scripts:
