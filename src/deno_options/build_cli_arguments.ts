@@ -2,6 +2,8 @@ import { DenoOptionsEntries, DenoOptionValue } from "../interfaces.ts";
 import { getOptionType } from "./utils.ts";
 import { optionsDefinitions } from "./const.ts";
 
+type CLIArgument = string | [string, number];
+
 function _toCliArgument(
   name: string,
   spacer = "",
@@ -10,7 +12,7 @@ function _toCliArgument(
   return `--${name}${spacer}${value}`;
 }
 
-function _transformToCLIArguments(option: string, value: DenoOptionValue) {
+function _transformToCLIArguments(option: string, value: DenoOptionValue): CLIArgument {
   const optionType = getOptionType(value);
 
   if (optionType === "string[]") {
@@ -32,6 +34,8 @@ function _transformToCLIArguments(option: string, value: DenoOptionValue) {
       return _toCliArgument(option);
     }
     return "";
+  } else if (optionType === "number") {
+    return [`--${option}`, value]
   }
 
   throw new Error(
@@ -40,13 +44,13 @@ function _transformToCLIArguments(option: string, value: DenoOptionValue) {
 }
 
 function buildDenoCLIOptionsArgs(denoOptions: DenoOptionsEntries) {
-  const argumentsOptions: string[] = [];
+  const argumentsOptions: CLIArgument[] = [];
 
   for (const [option, value] of Object.entries(denoOptions)) {
     argumentsOptions.push(_transformToCLIArguments(option, value));
   }
 
-  return argumentsOptions.filter(String);
+  return argumentsOptions.filter((e) => e).flat(Infinity);
 }
 
 export { buildDenoCLIOptionsArgs };

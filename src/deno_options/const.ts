@@ -23,7 +23,7 @@ const optionsDefinitions: OptionsDefinitionsType = {
   "no-remote": { type: "boolean" },
   "quiet": { type: "boolean" },
   "reload": { type: "string|boolean|string[]", spacer: "=" },
-  "seed": { type: "string", spacer: " " },
+  "seed": { type: "number", spacer: " " },
   "unstable": { type: "boolean" },
   "v8-flags": { type: "string|string[]", spacer: "=" },
 };

@@ -1,0 +1,5 @@
+scripts:
+  start:
+    file: main.ts
+    deno_options:
+      seed: 1

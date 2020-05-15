@@ -20,7 +20,7 @@ function getOptionType(value: DenoOptionValue) {
     }
   }
 
-  return _typeoffNumberAsString(value);
+  return typeof value;
 }
 
 export { getOptionType };

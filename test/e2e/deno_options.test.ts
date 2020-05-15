@@ -102,19 +102,51 @@ Deno.test("run script with erroneous merged scoped and global permissions", asyn
           "run",
           "start",
         ],
+        stdout: "piped",
         stderr: "piped",
       });
 
-      const output = await p.stderrOutput();
+      await p.output();
+      const errOutput = await p.stderrOutput();
       const { code } = await p.status();
 
-      const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(errOutput);
 
       assertEquals(code, 1);
       assertStrContains(
         string,
         'Uncaught PermissionDenied: network access to "https://jsonplaceho',
       );
+
+      p.close();
+    },
+  );
+});
+
+
+Deno.test("run script with seed deno options", async () => {
+  await changeAndRestoreCWD(
+    `test/fixture/seed`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "start",
+        ],
+        stdout: "piped",
+      });
+
+      const output = await p.output();
+      const { code } = await p.status();
+
+      const string = new TextDecoder().decode(output);
+
+      assertEquals(code, 0);
+      assertStrContains(string, "0.147205063401058");
 
       p.close();
     },
