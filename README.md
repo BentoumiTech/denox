@@ -95,22 +95,23 @@ scripts:
   # "denox run start" will execute main.ts with example.com networking permissions
   start:
     file: main.ts
-    permissions:
+    deno_options:
       allow-net: example.com
-  # "denox run develop" will execute main.ts with localhost networking permissions
+  # "denox run develop" will execute main.ts with localhost networking permissions and source code cache reloaded
   develop:
     file: main.ts
-    permissions:
+    deno_options:
       allow-net: localhost
+      reload: true
 ```
 
 ### Options
 
 Scripts can be extended with options.
 
-#### Permissions:
+#### deno_options:
 
-Permissions options will add the corresponding deno permission flag with it's value to the deno command.
+Deno options will add the corresponding deno argument with it's value to the deno command.
 
 It supports string, array of strings and boolean.
 
@@ -118,16 +119,26 @@ It supports string, array of strings and boolean.
 
 ```yaml
 scripts:
-  # "denox run start" will execute "deno run --allow-net=example.com github.com --allow-env --allow-read=./files main.ts"
+  # "denox run start" will execute "deno run --allow-net=example.com github.com --reload --allow-read=./files main.ts"
   start:
     file: main.ts
-    permissions:
+    deno_options:
+      reload: true
       allow-net:
         - example.com
         - github.com
-      allow-env: true
       allow-read: ./files
       allow-write: false
+```
+
+##### Compatibility
+
+It currently support all the options that are accepted by the `deno run` command. For more informations refer to `deno run --help`.
+
+```
+allow-all, allow-env, allow-hrtime, allow-net, allow-plugin, allow-read, allow-run,
+allow-write, cached-only, cert, config, importmap, inspect, inspect-brk, lock, lock-write,
+log-level, no-remote, quiet, reload, seed, unstable, v8-flags
 ```
 
 ### Globals
@@ -140,12 +151,12 @@ Options added in "globals" field gets added to all scripts.
 
 ```yaml
 scripts:
-  # "denox run develop" inherit the --allow-read permission from the globals permissions
+  # "denox run develop" inherit the --allow-read permission from the globals deno_options
   # "deno run --all-read main.ts"
   develop:
     file: main.ts
 globals:
-  permissions:
+  deno_options:
     allow-read: true
 ```
 

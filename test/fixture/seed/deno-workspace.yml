@@ -2,5 +2,4 @@ scripts:
   start:
     file: main.ts
     deno_options:
-      allow-read:
-        - './files'
+      seed: 1

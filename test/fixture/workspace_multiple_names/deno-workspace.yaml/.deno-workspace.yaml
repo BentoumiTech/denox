@@ -1,9 +1,9 @@
 scripts:
   start:
     file: .deno-workspace.yaml.ts
-    permissions:
+    deno_options:
       reload: true
 globals:
-  permissions:
+  deno_options:
       allow-read:
         - './files'

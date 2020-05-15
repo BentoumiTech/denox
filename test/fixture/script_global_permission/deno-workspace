@@ -1,9 +1,9 @@
 scripts:
   start:
     file: main.ts
-    permissions:
+    deno_options:
       allow-net: jsonplaceholder.typicode.com
 globals:
-  permissions:
+  deno_options:
     allow-read:
       - './files'
