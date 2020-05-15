@@ -2,8 +2,11 @@ scripts:
   start:
     file: main.ts
 globals:
-  permissions:
-      allow-read:
-        - './files'
+  deno_options:
+    allow-read:
+      - './files'
+    seed: 1
+    reload: true
+
 
 

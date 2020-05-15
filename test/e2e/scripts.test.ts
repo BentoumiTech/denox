@@ -10,7 +10,7 @@ Deno.test("Return an error when script doesn't exist", async () => {
         "-A",
         denoxPath,
         "run",
-        "not-found-script"
+        "not-found-script",
       ],
       stderr: "piped",
     });
@@ -19,7 +19,6 @@ Deno.test("Return an error when script doesn't exist", async () => {
     const { code } = await p.status();
 
     const string = new TextDecoder().decode(output);
-
 
     assertEquals(code, 1);
     assertStrContains(string, '\"not-found-script\" not found');
@@ -37,7 +36,7 @@ Deno.test("execute exising script", async () => {
         "-A",
         denoxPath,
         "run",
-        "start"
+        "start",
       ],
       stdout: "piped",
     });
@@ -47,9 +46,8 @@ Deno.test("execute exising script", async () => {
 
     const string = new TextDecoder().decode(output);
 
-
     assertEquals(code, 0);
-    assertStrContains(string, 'Hello World!');
+    assertStrContains(string, "Hello World!");
 
     p.close();
   });
@@ -57,28 +55,30 @@ Deno.test("execute exising script", async () => {
 
 // Write test for multiple scripts
 Deno.test("execute existing script when multiple are specified", async () => {
-  await changeAndRestoreCWD(`test/fixture/multiple_scripts`, async (denoxPath) => {
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "-A",
-        denoxPath,
-        "run",
-        "develop"
-      ],
-      stdout: "piped",
-    });
+  await changeAndRestoreCWD(
+    `test/fixture/multiple_scripts`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "develop",
+        ],
+        stdout: "piped",
+      });
 
-    const output = await p.output();
-    const { code } = await p.status();
+      const output = await p.output();
+      const { code } = await p.status();
 
-    const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(output);
 
+      assertEquals(code, 0);
+      assertStrContains(string, "Hello World Develop!");
 
-    assertEquals(code, 0);
-    assertStrContains(string, 'Hello World Develop!');
-
-    p.close();
-  });
+      p.close();
+    },
+  );
 });

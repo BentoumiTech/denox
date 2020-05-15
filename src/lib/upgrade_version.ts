@@ -11,14 +11,16 @@ function isCurrentLatestVersion(currentVersion: string, latestVersion: string) {
 }
 
 async function upgradeVersionMessage(currentVersion: string, repoName: string) {
-  const latestVersion = await getLatestVersion(repoName);
+  try {
+    const latestVersion = await getLatestVersion(repoName);
 
-  if (!isCurrentLatestVersion(currentVersion, latestVersion)) {
-    console.log(`
-      denox update available from ${currentVersion} to ${latestVersion}
-      To upgrade run deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
-    `);
-  }
+    if (!isCurrentLatestVersion(currentVersion, latestVersion)) {
+      console.log(`
+        denox update available from ${currentVersion} to ${latestVersion}
+        To upgrade run deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
+      `);
+    }
+  } catch (error) {}
 }
 
 export { upgradeVersionMessage };
