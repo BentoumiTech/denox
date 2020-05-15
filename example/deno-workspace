@@ -3,7 +3,10 @@ scripts:
     file: main.ts
 globals:
   deno_options:
-      allow-read:
-        - './files'
+    allow-read:
+      - './files'
+    seed: 1
+    reload: true
+
 
 
