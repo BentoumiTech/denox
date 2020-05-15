@@ -13,6 +13,13 @@
   <img src="https://raw.githubusercontent.com/bentoumitech/denox/master/.github/img/screenshot-example.png" height="300" alt="DenoX screenshot example">
 </p>
 
+## Install/Upgrade
+
+Prerequisites: [Deno](https://github.com/denoland/deno_install) (>=1.0.0)
+
+```bash
+$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
+```
 
 ## Overview
 
@@ -36,12 +43,9 @@ $ denox run start
 - **Packaged** Your code can run on a different machine with a short single command `denox run start`
 - **Extensible** :soon:
 
-## Install/Upgrade
-
-Prerequisites: [Deno](https://github.com/denoland/deno_install) (>=1.0.0)
+## Usage
 
 ```bash
-$ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
 $ denox --help
 denox v0.2.0
 
