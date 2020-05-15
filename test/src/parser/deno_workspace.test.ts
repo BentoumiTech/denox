@@ -9,7 +9,6 @@ import {
 } from "../../../src/utils/DenoErrors.ts";
 import { changeAndRestoreCWD } from "../../utils/cwd.ts";
 
-
 Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", async () => {
   await changeAndRestoreCWD("test/fixture/no_workspace", async () => {
     assertThrows(() => {
@@ -26,9 +25,6 @@ Deno.test("throw WorkspaceMalformed when workspace file is not valid", async () 
   });
 });
 
-
-
-
 Deno.test("load valid workspaces with correct order of priority", async () => {
   const files = [
     "deno-workspace.yml",
@@ -36,15 +32,20 @@ Deno.test("load valid workspaces with correct order of priority", async () => {
     "deno-workspace.yaml",
     ".deno-workspace",
     ".deno-workspace.yml",
-    ".deno-workspace.yaml"
+    ".deno-workspace.yaml",
   ];
 
   for (const file of files) {
-    await changeAndRestoreCWD(`test/fixture/workspace_multiple_names/${file}`, async () => {
-      assertEquals(loadDenoWorkspace(), {
-        scripts: { start: { file: `${file}.ts`, permissions: { reload: true } } },
-        globals: { permissions: { "allow-read": ["./files"] } },
-      });
-    });
+    await changeAndRestoreCWD(
+      `test/fixture/workspace_multiple_names/${file}`,
+      async () => {
+        assertEquals(loadDenoWorkspace(), {
+          scripts: {
+            start: { file: `${file}.ts`, permissions: { reload: true } },
+          },
+          globals: { permissions: { "allow-read": ["./files"] } },
+        });
+      },
+    );
   }
 });

@@ -2,110 +2,121 @@ import { assertEquals, assertStrContains } from "../../dev_deps.ts";
 import { changeAndRestoreCWD } from "../utils/cwd.ts";
 
 Deno.test("run script with scoped permissions", async () => {
-  await changeAndRestoreCWD(`test/fixture/script_permission`, async (denoxPath) => {
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "-A",
-        denoxPath,
-        "run",
-        "start"
-      ],
-      stdout: "piped",
-    });
+  await changeAndRestoreCWD(
+    `test/fixture/script_permission`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "start",
+        ],
+        stdout: "piped",
+      });
 
-    const output = await p.output();
-    const { code } = await p.status();
+      const output = await p.output();
+      const { code } = await p.status();
 
-    const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(output);
 
+      assertEquals(code, 0);
+      assertStrContains(string, "I'm text file content");
 
-    assertEquals(code, 0);
-    assertStrContains(string, "I'm text file content");
-
-    p.close();
-  });
+      p.close();
+    },
+  );
 });
 
 Deno.test("run script with global permissions", async () => {
-  await changeAndRestoreCWD(`test/fixture/global_permission`, async (denoxPath) => {
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "-A",
-        denoxPath,
-        "run",
-        "start"
-      ],
-      stdout: "piped",
-    });
+  await changeAndRestoreCWD(
+    `test/fixture/global_permission`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "start",
+        ],
+        stdout: "piped",
+      });
 
-    const output = await p.output();
-    const { code } = await p.status();
+      const output = await p.output();
+      const { code } = await p.status();
 
-    const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(output);
 
+      assertEquals(code, 0);
+      assertStrContains(string, "I'm text file content");
 
-    assertEquals(code, 0);
-    assertStrContains(string, "I'm text file content");
-
-    p.close();
-  });
+      p.close();
+    },
+  );
 });
 
 Deno.test("run script with scoped and global permissions", async () => {
-  await changeAndRestoreCWD(`test/fixture/script_global_permission`, async (denoxPath) => {
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "-A",
-        denoxPath,
-        "run",
-        "start"
-      ],
-      stdout: "piped",
-    });
+  await changeAndRestoreCWD(
+    `test/fixture/script_global_permission`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "start",
+        ],
+        stdout: "piped",
+      });
 
-    const output = await p.output();
-    const { code } = await p.status();
+      const output = await p.output();
+      const { code } = await p.status();
 
-    const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(output);
 
+      assertEquals(code, 0);
+      assertStrContains(string, "I'm text file content");
+      assertStrContains(string, "delectus aut autem");
 
-    assertEquals(code, 0);
-    assertStrContains(string, "I'm text file content");
-    assertStrContains(string, "delectus aut autem");
-
-    p.close();
-  });
+      p.close();
+    },
+  );
 });
 
 Deno.test("run script with erroneous merged scoped and global permissions", async () => {
-  await changeAndRestoreCWD(`test/fixture/merged_scoped_global__invalid_permission`, async (denoxPath) => {
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "-A",
-        denoxPath,
-        "run",
-        "start"
-      ],
-      stderr: "piped",
-    });
+  await changeAndRestoreCWD(
+    `test/fixture/merged_scoped_global__invalid_permission`,
+    async (denoxPath) => {
+      const p = Deno.run({
+        cmd: [
+          "deno",
+          "run",
+          "-A",
+          denoxPath,
+          "run",
+          "start",
+        ],
+        stderr: "piped",
+      });
 
-    const output = await p.stderrOutput();
-    const { code } = await p.status();
+      const output = await p.stderrOutput();
+      const { code } = await p.status();
 
-    const string = new TextDecoder().decode(output);
+      const string = new TextDecoder().decode(output);
 
+      assertEquals(code, 1);
+      assertStrContains(
+        string,
+        'Uncaught PermissionDenied: network access to "https://jsonplaceho',
+      );
 
-    assertEquals(code, 1);
-    assertStrContains(string, 'Uncaught PermissionDenied: network access to "https://jsonplaceho');
-
-    p.close();
-  });
+      p.close();
+    },
+  );
 });

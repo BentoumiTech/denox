@@ -18,7 +18,7 @@ async function run(script: string, args: string[]) {
       throw new ScriptNotFoundError(script);
     }
 
-    const globalPermissions = workspace?.globals?.permissions
+    const globalPermissions = workspace?.globals?.permissions;
 
     const permissions = constructCLIArguments({
       ...globalPermissions,
