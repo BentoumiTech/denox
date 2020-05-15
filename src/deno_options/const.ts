@@ -1,5 +1,5 @@
 type OptionsDefinitionsType = {
-  [key: string]: { type: string, spacer?: string },
+  [key: string]: { type: string; spacer?: string };
 };
 
 const optionsDefinitions: OptionsDefinitionsType = {

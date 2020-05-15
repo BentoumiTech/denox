@@ -42,7 +42,11 @@ class DenoOptionNotRecognized extends DenoXError {
 }
 
 class DenoOptionIncorrectType extends DenoXError {
-  constructor(optionName: string, optionDefinitionType: string, optionType: string) {
+  constructor(
+    optionName: string,
+    optionDefinitionType: string,
+    optionType: string,
+  ) {
     super(`
       The option: "${optionName}" in deno-workspace.yml type is not valid.
       Currently it's "${optionType}" but only "${optionDefinitionType}" is/are valid
@@ -55,5 +59,5 @@ export {
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
   DenoOptionNotRecognized,
-  DenoOptionIncorrectType
+  DenoOptionIncorrectType,
 };

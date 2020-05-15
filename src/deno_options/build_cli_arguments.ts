@@ -2,20 +2,32 @@ import { DenoOptionsEntries, DenoOptionValue } from "../interfaces.ts";
 import { getOptionType } from "./utils.ts";
 import { optionsDefinitions } from "./const.ts";
 
-function _toCliArgument(name: string, spacer = '', value: string | number = '') {
+function _toCliArgument(
+  name: string,
+  spacer = "",
+  value: string | number = "",
+) {
   return `--${name}${spacer}${value}`;
 }
 
 function _transformToCLIArguments(option: string, value: DenoOptionValue) {
   const optionType = getOptionType(value);
 
-  if (optionType === 'string[]') {
+  if (optionType === "string[]") {
     const arrayOfValues = value as (string | number)[];
-    return _toCliArgument(option, optionsDefinitions[option].spacer, arrayOfValues.join(","));
+    return _toCliArgument(
+      option,
+      optionsDefinitions[option].spacer,
+      arrayOfValues.join(","),
+    );
   } else if (optionType === "string") {
-    const stringValue = value as (string| number);
-    return _toCliArgument(option, optionsDefinitions[option].spacer, stringValue);
-  } else if (optionType === 'boolean') {
+    const stringValue = value as (string | number);
+    return _toCliArgument(
+      option,
+      optionsDefinitions[option].spacer,
+      stringValue,
+    );
+  } else if (optionType === "boolean") {
     if (value === true) {
       return _toCliArgument(option);
     }

@@ -2,7 +2,7 @@ type DenoOptionValue = unknown;
 
 type DenoOptionsEntries = {
   [key: string]: DenoOptionValue;
-}
+};
 
 type WorkspaceOptions = {
   deno_options?: DenoOptionsEntries;
@@ -19,5 +19,4 @@ type DenoWorkspace = {
     [key: string]: WorkspaceScript;
   };
   globals?: WorkspaceGlobal;
-}
-
+};
