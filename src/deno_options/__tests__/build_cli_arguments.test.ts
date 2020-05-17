@@ -1,5 +1,5 @@
 import { assertEquals, assertArrayContains } from "../../../dev_deps.ts";
-import { buildDenoCLIOptionsArgs } from "../../../src/deno_options/build_cli_arguments.ts";
+import { buildDenoCLIOptionsArgs } from "../build_cli_arguments.ts";
 
 Deno.test("parse a single value CLI option", () => {
   assertEquals(
@@ -35,13 +35,23 @@ Deno.test("parse mutliple CLI option", () => {
       "allow-net": ["example.com", "google.com"],
       "allow-env": true,
       "allow-read": ".",
+      "seed": 1,
+      "cert": "./certfile",
+      "allow-write": false,
     },
   );
 
   assertArrayContains(
     cliArgumentsArray,
-    ["--allow-net=example.com,google.com", "--allow-env", "--allow-read=."],
+    [
+      "--allow-net=example.com,google.com",
+      "--allow-env",
+      "--allow-read=.",
+      "--seed",
+      1,
+      "--cert ./certfile",
+    ],
   );
 
-  assertEquals(cliArgumentsArray.length, 3);
+  assertEquals(cliArgumentsArray.length, 6);
 });
