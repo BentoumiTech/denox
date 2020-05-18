@@ -17,10 +17,19 @@ Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", asyn
   });
 });
 
-Deno.test("throw WorkspaceMalformed when workspace file is not valid", async () => {
-  await changeAndRestoreCWD("test/fixture/malformed", async () => {
+Deno.test("throw WorkspaceMalformed when yaml workspace file is not valid", async () => {
+  await changeAndRestoreCWD("test/fixture/malformed_yaml", async () => {
     assertThrows(() => {
       loadDenoWorkspace();
+    }, WorkspaceFileIsMalformed);
+  });
+});
+
+Deno.test("throw WorkspaceMalformed when json workspace file is not valid", async () => {
+  await changeAndRestoreCWD("test/fixture/malformed_json", async () => {
+    assertThrows(() => {
+      loadDenoWorkspace();
+      console.log(loadDenoWorkspace());
     }, WorkspaceFileIsMalformed);
   });
 });
@@ -33,6 +42,8 @@ Deno.test("load valid workspaces with correct order of priority", async () => {
     ".deno-workspace",
     ".deno-workspace.yml",
     ".deno-workspace.yaml",
+    "deno-workspace.json",
+    ".deno-workspace.json",
   ];
 
   for (const file of files) {

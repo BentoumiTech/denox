@@ -1,0 +1,17 @@
+{
+	"scripts": {
+		"start": {
+			"file": "deno-workspace.json.ts",
+			"deno_options": {
+				"reload": true
+			}
+		}
+	},
+	"globals": {
+		"deno_options": {
+			"allow-read": [
+				"./files"
+			]
+		}
+	}
+}
