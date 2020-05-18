@@ -1,4 +1,4 @@
-import { assertEquals, assertStrContains, resolve } from "../../../dev_deps.ts";
+import { assertEquals, assertStrContains, resolve, join } from "../../../dev_deps.ts";
 import { testDenoXRun } from "../../utils/denox-run.ts";
 import { exists } from "../../../src/utils/file.ts";
 
@@ -107,8 +107,10 @@ Deno.test("test log-level option is applied", async () => {
 
 Deno.test("test config option is applied", async () => {
   await testDenoXRun("config", "test/fixture/deno_options", async ({ code, output }) => {
+    const tsconfigPath = join('files', 'tsconfig.json');
+
     assertEquals(code, 0);
-    assertStrContains(output, 'files/tsconfig.json');
+    assertStrContains(output, tsconfigPath);
   });
 });
 

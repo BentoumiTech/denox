@@ -5,4 +5,4 @@ export {
   assertStrContains,
 } from "https://deno.land/std@0.50.0/testing/asserts.ts";
 
-export { resolve } from "https://deno.land/std@0.50.0/path/mod.ts";
+export { resolve, join } from "https://deno.land/std@0.50.0/path/mod.ts";
