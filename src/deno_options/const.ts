@@ -13,7 +13,7 @@ const optionsDefinitions: OptionsDefinitionsType = {
   "allow-write": { type: "string|boolean|string[]", spacer: "=" },
   "cached-only": { type: "boolean" },
   "cert": { type: "string", spacer: " " },
-  "config": { type: "string", spacer: " " },
+  "config": { type: "string", spacer: "=" },
   "importmap": { type: "string", spacer: " " },
   "inspect": { type: "string", spacer: "=" },
   "inspect-brk": { type: "string", spacer: "=" },
