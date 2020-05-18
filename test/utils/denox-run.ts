@@ -3,7 +3,9 @@ import { changeAndRestoreCWD } from "./cwd.ts";
 async function testDenoXRun(
   scriptName: string,
   workspaceFolder: string,
-  assertRunOutput: (denoxOutput: { output: string; errOutput: string, code: number }) => Promise<void>,
+  assertRunOutput: (
+    denoxOutput: { output: string; errOutput: string; code: number },
+  ) => Promise<void>,
 ) {
   await changeAndRestoreCWD(
     workspaceFolder,
