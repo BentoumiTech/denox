@@ -49,7 +49,7 @@ Deno.test("parse mutliple CLI option", () => {
       "--allow-read=.",
       "--seed",
       1,
-      "--cert ./certfile",
+      "--cert=./certfile",
     ],
   );
 

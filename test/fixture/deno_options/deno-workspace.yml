@@ -1,0 +1,57 @@
+scripts:
+  permissions:
+    file: permissions.ts
+    deno_options:
+      allow-env: true
+      allow-hrtime: true
+      allow-net: google.com
+      allow-plugin: true
+      allow-read: ./files
+      allow-run: true
+      allow-write: ./files
+      unstable: true
+  all-permissions:
+    file: permissions.ts
+    deno_options:
+      allow-all: true
+      unstable: true
+  seed:
+    file: seed.ts
+    deno_options:
+      seed: 1
+  quiet:
+    file: quiet.ts
+    deno_options:
+      log-level: debug
+      quiet: true
+  lock:
+    file: main.ts
+    deno_options:
+      lock: ./files/lock.json
+      lock-write: true
+  log-level:
+    file: main.ts
+    deno_options:
+      log-level: debug
+  config:
+    file: main.ts
+    deno_options:
+      config: ./files/tsconfig.json
+      log-level: debug
+  import-map:
+    file: main.ts
+    deno_options:
+      importmap: files/import_map.json
+      log-level: debug
+      unstable: true
+  rest-options:
+    file: main.ts
+    deno_options:
+      v8-flags:
+        - --regexp-tier-up
+        - --adjust-os-scheduling-parameters true
+      cached-only: true
+      cert: ./files/test.cer
+      no-remote: true
+      reload: true
+

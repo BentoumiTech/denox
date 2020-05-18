@@ -1,10 +1,10 @@
-import { assertEquals, assertStrContains } from "../../dev_deps.ts";
-import { changeAndRestoreCWD } from "../utils/cwd.ts";
+import { assertEquals, assertStrContains } from "../../../dev_deps.ts";
+import { changeAndRestoreCWD } from "../../utils/cwd.ts";
 
-Deno.test("run script with scoped permissions", async () => {
+Deno.test("run script with scoped options", async () => {
   await changeAndRestoreCWD(
     `test/fixture/script_permission`,
-    async (denoxPath) => {
+    async (denoxPath: string) => {
       const p = Deno.run({
         cmd: [
           "deno",
@@ -30,10 +30,10 @@ Deno.test("run script with scoped permissions", async () => {
   );
 });
 
-Deno.test("run script with global permissions", async () => {
+Deno.test("run script with global options", async () => {
   await changeAndRestoreCWD(
     `test/fixture/global_permission`,
-    async (denoxPath) => {
+    async (denoxPath: string) => {
       const p = Deno.run({
         cmd: [
           "deno",
@@ -59,7 +59,7 @@ Deno.test("run script with global permissions", async () => {
   );
 });
 
-Deno.test("run script with scoped and global permissions", async () => {
+Deno.test("run script with scoped and global options", async () => {
   await changeAndRestoreCWD(
     `test/fixture/script_global_permission`,
     async (denoxPath) => {
@@ -89,7 +89,7 @@ Deno.test("run script with scoped and global permissions", async () => {
   );
 });
 
-Deno.test("run script with erroneous merged scoped and global permissions", async () => {
+Deno.test("run script with erroneous merged scoped and global options", async () => {
   await changeAndRestoreCWD(
     `test/fixture/merged_scoped_global__invalid_permission`,
     async (denoxPath) => {
@@ -117,36 +117,6 @@ Deno.test("run script with erroneous merged scoped and global permissions", asyn
         string,
         'Uncaught PermissionDenied: network access to "https://jsonplaceho',
       );
-
-      p.close();
-    },
-  );
-});
-
-
-Deno.test("run script with seed deno options", async () => {
-  await changeAndRestoreCWD(
-    `test/fixture/seed`,
-    async (denoxPath) => {
-      const p = Deno.run({
-        cmd: [
-          "deno",
-          "run",
-          "-A",
-          denoxPath,
-          "run",
-          "start",
-        ],
-        stdout: "piped",
-      });
-
-      const output = await p.output();
-      const { code } = await p.status();
-
-      const string = new TextDecoder().decode(output);
-
-      assertEquals(code, 0);
-      assertStrContains(string, "0.147205063401058");
 
       p.close();
     },

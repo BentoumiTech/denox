@@ -2,12 +2,12 @@ import {
   assertThrows,
   assertEquals,
 } from "../../../dev_deps.ts";
-import { loadDenoWorkspace } from "../../../src/parser/deno_workspace.ts";
+import { loadDenoWorkspace } from "../deno_workspace.ts";
 import {
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
-} from "../../../src/utils/DenoXErrors.ts";
-import { changeAndRestoreCWD } from "../../utils/cwd.ts";
+} from "../../utils/DenoXErrors.ts";
+import { changeAndRestoreCWD } from "../../../test/utils/cwd.ts";
 
 Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", async () => {
   await changeAndRestoreCWD("test/fixture/no_workspace", async () => {
