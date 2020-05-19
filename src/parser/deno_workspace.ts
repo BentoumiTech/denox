@@ -27,19 +27,23 @@ async function loadDenoWorkspace(): Promise<DenoWorkspace> {
     );
     return parseYaml(denoWorkspaceFileContent) as DenoWorkspace;
   } catch (e) {
-    if (e instanceof Deno.errors.NotFound) {
-      throw new WorkspaceNotFoundError();
-    }
-
-    if (
-      e instanceof YAMLError || e instanceof ReferenceError ||
-      e instanceof TypeError
-    ) {
-      throw new WorkspaceFileIsMalformed(e.message);
-    }
-
-    throw e;
+    throw _handleLoadDenoWorkspaceErrors(e);
   }
+}
+
+function _handleLoadDenoWorkspaceErrors(e: unknown) {
+  if (e instanceof Deno.errors.NotFound) {
+    return new WorkspaceNotFoundError();
+  }
+
+  if (
+    e instanceof YAMLError || e instanceof ReferenceError ||
+    e instanceof TypeError
+  ) {
+    return new WorkspaceFileIsMalformed(e.message);
+  }
+
+  return e;
 }
 
 export { loadDenoWorkspace };
