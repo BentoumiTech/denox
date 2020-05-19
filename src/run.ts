@@ -13,7 +13,7 @@ async function run(script: string, args: string[]) {
     const workspace = loadDenoWorkspace();
 
     const workspaceScript = workspace.scripts[script];
-    const workspaceGlobal = workspace?.globals;
+    const workspaceGlobal = workspace?.globals || {};
 
     if (workspaceScript === undefined) {
       throw new ScriptNotFoundError(script);
