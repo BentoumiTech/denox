@@ -23,7 +23,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
-    - run: npm install -g typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent eslint
+    - run: npm install -g typescript eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v2
     - run: eslint . --ext .js,.jsx,.ts,.tsx
     - run: deno install -Af denox.ts
     - run: deno test -A --failfast
