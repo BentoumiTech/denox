@@ -36,7 +36,9 @@ function _transformToCLIArguments(option: string, value: DenoOptionValue) {
     );
   }
 
-  const argValue = optionType === "string[]" ? value.join(",") : value;
+  const argValue = optionType === "string[]"
+    ? (value as string[]).join(",")
+    : value as string | number | boolean;
 
   const argHash = {
     name: option,
