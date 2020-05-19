@@ -1,5 +1,4 @@
 import {
-  assertThrows,
   assertEquals,
   assertThrowsAsync,
 } from "../../../dev_deps.ts";
@@ -12,7 +11,7 @@ import { changeAndRestoreCWD } from "../../../test/utils/cwd.ts";
 
 Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", async () => {
   await changeAndRestoreCWD("test/fixture/no_workspace", async () => {
-    assertThrowsAsync(async () => {
+    await assertThrowsAsync(async () => {
       await loadDenoWorkspace();
     }, WorkspaceNotFoundError);
   });
@@ -20,7 +19,7 @@ Deno.test("throw WorkspaceNotFoundError when workspace file doesn't exist", asyn
 
 Deno.test("throw WorkspaceMalformed when yaml workspace file is not valid", async () => {
   await changeAndRestoreCWD("test/fixture/malformed_yaml", async () => {
-    assertThrowsAsync(async () => {
+    await assertThrowsAsync(async () => {
       await loadDenoWorkspace();
     }, WorkspaceFileIsMalformed);
   });
@@ -28,7 +27,7 @@ Deno.test("throw WorkspaceMalformed when yaml workspace file is not valid", asyn
 
 Deno.test("throw WorkspaceMalformed when json workspace file is not valid", async () => {
   await changeAndRestoreCWD("test/fixture/malformed_json", async () => {
-    assertThrowsAsync(async () => {
+    await assertThrowsAsync(async () => {
       await loadDenoWorkspace();
     }, WorkspaceFileIsMalformed);
   });
@@ -36,7 +35,7 @@ Deno.test("throw WorkspaceMalformed when json workspace file is not valid", asyn
 
 Deno.test("throw WorkspaceMalformed when ts workspace file is not valid", async () => {
   await changeAndRestoreCWD("test/fixture/malformed_ts", async () => {
-    assertThrowsAsync(async () => {
+    await assertThrowsAsync(async () => {
       await loadDenoWorkspace();
     }, WorkspaceFileIsMalformed);
   });

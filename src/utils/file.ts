@@ -1,26 +1,29 @@
 import { resolve } from "../../deps.ts";
 
-function readFirstExistingFile(
-  files: string[],
-): { path: string; content: string } {
-  const [firstFile, ...restFiles] = files;
-  try {
-    const firstFileFullPath = resolve(firstFile);
-    const fileBytes = Deno.readFileSync(firstFileFullPath);
-    const decoder = new TextDecoder("utf-8");
-    return {
-      path: firstFileFullPath,
-      content: decoder.decode(fileBytes),
-    };
-  } catch (e) {
-    if (e instanceof Deno.errors.NotFound) {
-      if (restFiles.length > 0) {
-        return readFirstExistingFile(restFiles);
-      }
-    }
+async function getFileContent(
+  filePath: string,
+): Promise<string> {
+  const fileBytes = await Deno.readFile(filePath);
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(fileBytes);
+}
 
-    throw e;
+async function getFirstExistingPath(
+  files: string[],
+): Promise<string> {
+  const [firstFile, ...restFiles] = files;
+  const firstFileFullPath = resolve(firstFile);
+  const isfirstFileFullPathExist = await exists(firstFileFullPath);
+
+  if (isfirstFileFullPathExist) {
+    return firstFileFullPath;
   }
+
+  if (restFiles.length > 0) {
+    return await getFirstExistingPath(restFiles);
+  }
+
+  throw new Deno.errors.NotFound();
 }
 
 async function exists(filename: string): Promise<boolean> {
@@ -36,4 +39,4 @@ async function exists(filename: string): Promise<boolean> {
   }
 }
 
-export { readFirstExistingFile, exists };
+export { getFirstExistingPath, getFileContent, exists };

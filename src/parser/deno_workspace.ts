@@ -3,7 +3,7 @@ import { parseYaml, YAMLError, extname } from "../../deps.ts";
 import { DENO_WORKSPACE_FILES } from "../const.ts";
 import { DenoWorkspace } from "../interfaces.ts";
 
-import { readFirstExistingFile } from "../utils/file.ts";
+import { getFirstExistingPath, getFileContent } from "../utils/file.ts";
 import {
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
@@ -11,16 +11,21 @@ import {
 
 async function loadDenoWorkspace(): Promise<DenoWorkspace> {
   try {
-    const denoWorkspaceFile = readFirstExistingFile(DENO_WORKSPACE_FILES);
+    const denoWorkspaceFilePath = await getFirstExistingPath(
+      DENO_WORKSPACE_FILES,
+    );
 
-    if (extname(denoWorkspaceFile.path) === ".ts") {
-      const { workspace } = await import(denoWorkspaceFile.path) as {
+    if (extname(denoWorkspaceFilePath) === ".ts") {
+      const { workspace } = await import(denoWorkspaceFilePath) as {
         workspace: DenoWorkspace;
       };
       return workspace;
     }
 
-    return parseYaml(denoWorkspaceFile.content) as DenoWorkspace;
+    const denoWorkspaceFileContent = await getFileContent(
+      denoWorkspaceFilePath,
+    );
+    return parseYaml(denoWorkspaceFileContent) as DenoWorkspace;
   } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
       throw new WorkspaceNotFoundError();
