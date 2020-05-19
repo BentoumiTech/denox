@@ -9,6 +9,8 @@ const DENO_WORKSPACE_FILES = [
   ".deno-workspace.yaml",
   "deno-workspace.json",
   ".deno-workspace.json",
+  "deno-workspace.ts",
+  ".deno-workspace.ts",
 ];
 
 export { CURRENT_VERSION, GITHUB_REPO_NAME, DENO_WORKSPACE_FILES };

@@ -10,7 +10,7 @@ import { parseDenoOptions } from "./deno_options/parse.ts";
 
 async function run(script: string, args: string[]) {
   try {
-    const workspace = loadDenoWorkspace();
+    const workspace = await loadDenoWorkspace();
 
     const workspaceScript = workspace.scripts[script];
     const workspaceGlobal = workspace?.globals || {};
@@ -25,6 +25,7 @@ async function run(script: string, args: string[]) {
     );
 
     const p = Deno.run({
+      // @ts-ignore
       cmd: [
         "deno",
         "run",

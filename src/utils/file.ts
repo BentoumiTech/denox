@@ -1,9 +1,15 @@
-function readFirstExistingFile(files: string[]): string {
+import { resolve } from "../../deps.ts";
+
+function readFirstExistingFile(files: string[]): {path: string, content: string} {
   const [firstFile, ...restFiles] = files;
   try {
-    const fileBytes = Deno.readFileSync(firstFile);
+    const firstFileFullPath = resolve(firstFile);
+    const fileBytes = Deno.readFileSync(firstFileFullPath);
     const decoder = new TextDecoder("utf-8");
-    return decoder.decode(fileBytes);
+    return {
+      path: firstFileFullPath,
+      content: decoder.decode(fileBytes)
+    };
   } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
       if (restFiles.length > 0) {
