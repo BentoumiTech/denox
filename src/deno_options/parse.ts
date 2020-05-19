@@ -1,5 +1,6 @@
 import { validateOptions } from "./validate.ts";
 import { buildDenoCLIOptionsArgs } from "./build_cli_arguments.ts";
+import { WorkspaceGlobal, WorkspaceScript } from "../interfaces.ts";
 
 function parseDenoOptions(
   workspaceGlobal: WorkspaceGlobal,
