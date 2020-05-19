@@ -8,7 +8,7 @@ import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
 import { parseDenoOptions } from "./deno_options/parse.ts";
 
-async function run(script: string, args: string[]) {
+async function run(script: string, args: string[]): Promise<void> {
   try {
     const workspace = await loadDenoWorkspace();
 
@@ -42,12 +42,13 @@ async function run(script: string, args: string[]) {
     Deno.exit(code);
   } catch (e) {
     if (e instanceof Deno.errors.PermissionDenied) {
-      return consolex.error(`
+      consolex.error(`
         Please reinstall denox with the correct pemissions
         deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
       `);
+    } else {
+      consolex.error(e.message);
     }
-    return consolex.error(e.message);
   }
 }
 

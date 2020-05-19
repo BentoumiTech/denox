@@ -2,7 +2,7 @@ import { DenoOptionsEntries, DenoOptionValue } from "../interfaces.ts";
 import { getOptionType } from "./utils.ts";
 import { optionsDefinitions } from "./const.ts";
 
-type CLIArgument = string | [string, number];
+type CLIArgument = string | number | [string, number];
 type hashCliArgType = { name: string; value: string | boolean | number };
 
 function _hashToCLIArg(
@@ -26,7 +26,7 @@ function _hashToCLIArg(
   return `${cliArgOptionName}${cliArgOptionDefinition.spacer}${hash.value}`;
 }
 
-function _transformToCLIArguments(option: string, value: DenoOptionValue) {
+function _transformToCLIArguments(option: string, value: DenoOptionValue): CLIArgument {
   const optionType = getOptionType(value);
   const optionDefinitionType = optionsDefinitions[option].type.split("|");
 
@@ -48,7 +48,7 @@ function _transformToCLIArguments(option: string, value: DenoOptionValue) {
   return _hashToCLIArg(argHash);
 }
 
-function buildDenoCLIOptionsArgs(denoOptions: DenoOptionsEntries) {
+function buildDenoCLIOptionsArgs(denoOptions: DenoOptionsEntries): CLIArgument[] {
   const argumentsOptions: CLIArgument[] = [];
 
   for (const [option, value] of Object.entries(denoOptions)) {
@@ -58,4 +58,4 @@ function buildDenoCLIOptionsArgs(denoOptions: DenoOptionsEntries) {
   return argumentsOptions.filter((e) => e).flat(Infinity);
 }
 
-export { buildDenoCLIOptionsArgs };
+export { buildDenoCLIOptionsArgs, CLIArgument };

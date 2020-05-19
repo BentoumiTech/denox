@@ -7,7 +7,7 @@ Deno.test("Return an error when script doesn't exist", async () => {
     "test/fixture/single_script",
     async ({ code, errOutput }) => {
       assertEquals(code, 1);
-      assertStrContains(errOutput, '\"not-found-script\" not found');
+      assertStrContains(errOutput, '"not-found-script" not found');
     },
   );
 });

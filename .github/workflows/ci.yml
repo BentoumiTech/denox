@@ -20,5 +20,10 @@ jobs:
     - uses: denolib/setup-deno@master
       with:
         deno-version: ${{ matrix.deno }}
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - run: npm install -g typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent eslint
+    - run: eslint . --ext .js,.jsx,.ts,.tsx
     - run: deno install -Af denox.ts
     - run: deno test -A --failfast

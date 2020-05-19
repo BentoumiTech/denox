@@ -16,31 +16,31 @@ Deno.test("test permissions are applied", async () => {
 
       assertStrContains(
         output,
-        'allow-env: PermissionStatus { state: \"granted\" }',
+        'allow-env: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-hrtime: PermissionStatus { state: \"granted\" }',
+        'allow-hrtime: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-net: PermissionStatus { state: \"granted\" }',
+        'allow-net: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-plugin: PermissionStatus { state: \"granted\" }',
+        'allow-plugin: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-read: PermissionStatus { state: \"granted\" }',
+        'allow-read: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-run: PermissionStatus { state: \"granted\" }',
+        'allow-run: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-write: PermissionStatus { state: \"granted\" }',
+        'allow-write: PermissionStatus { state: "granted" }',
       );
     },
   );
@@ -55,36 +55,37 @@ Deno.test("test all permissions are applied", async () => {
 
       assertStrContains(
         output,
-        'allow-env: PermissionStatus { state: \"granted\" }',
+        'allow-env: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-hrtime: PermissionStatus { state: \"granted\" }',
+        'allow-hrtime: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-net: PermissionStatus { state: \"granted\" }',
+        'allow-net: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-plugin: PermissionStatus { state: \"granted\" }',
+        'allow-plugin: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-read: PermissionStatus { state: \"granted\" }',
+        'allow-read: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-run: PermissionStatus { state: \"granted\" }',
+        'allow-run: PermissionStatus { state: "granted" }',
       );
       assertStrContains(
         output,
-        'allow-write: PermissionStatus { state: \"granted\" }',
+        'allow-write: PermissionStatus { state: "granted" }',
       );
     },
   );
 });
 
+// TODO: Add fornon granted permissions
 Deno.test("test seed option is applied", async () => {
   await testDenoXRun(
     "seed",

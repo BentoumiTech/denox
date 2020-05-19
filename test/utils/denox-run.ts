@@ -6,7 +6,7 @@ async function testDenoXRun(
   assertRunOutput: (
     denoxOutput: { output: string; errOutput: string; code: number },
   ) => Promise<void>,
-) {
+): Promise<void> {
   await changeAndRestoreCWD(
     workspaceFolder,
     async (denoxPath) => {

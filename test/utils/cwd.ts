@@ -4,8 +4,8 @@ import {
 
 async function changeAndRestoreCWD(
   directory: string,
-  assertion: (denoxPath: string) => Promise<any>,
-) {
+  assertion: (denoxPath: string) => Promise<void>,
+): Promise<void> {
   const cwd = Deno.cwd();
   const denoxPath = resolve("./denox.ts");
   Deno.chdir(resolve(directory));

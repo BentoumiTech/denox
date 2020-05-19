@@ -31,7 +31,7 @@ async function loadDenoWorkspace(): Promise<DenoWorkspace> {
   }
 }
 
-function _handleLoadDenoWorkspaceErrors(e: unknown) {
+function _handleLoadDenoWorkspaceErrors(e: unknown): Error {
   if (e instanceof Deno.errors.NotFound) {
     return new WorkspaceNotFoundError();
   }
@@ -43,7 +43,7 @@ function _handleLoadDenoWorkspaceErrors(e: unknown) {
     return new WorkspaceFileIsMalformed(e.message);
   }
 
-  return e;
+  return e as Error;
 }
 
 export { loadDenoWorkspace };
