@@ -17,6 +17,22 @@ module.exports = {
         "skipComments": true
       },
     ],
+    "no-shadow": "error",
+    "max-params": [
+      "error",
+      3
+    ],
+    "max-statements-per-line": [
+      "error",
+      {
+        "max": 2
+      }
+    ],
+    "complexity": [
+      "error",
+      15
+    ],
+    "no-undef": "error",
   },
   "overrides": [
     {
