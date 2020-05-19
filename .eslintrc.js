@@ -8,7 +8,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 0,
     'no-console': 0,
     '@typescript-eslint/no-use-before-define': 0,
-    '@typescript-eslint/camelcase': 0
+    '@typescript-eslint/camelcase': 0,
+    'no-prototype-builtins': 0
   },
   extends: [
     'eslint:recommended',
