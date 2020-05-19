@@ -1,7 +1,7 @@
 import {
   assertThrows,
   assertEquals,
-  assertThrowsAsync
+  assertThrowsAsync,
 } from "../../../dev_deps.ts";
 import { loadDenoWorkspace } from "../deno_workspace.ts";
 import {
@@ -53,6 +53,7 @@ Deno.test("load valid workspaces with correct order of priority", async () => {
     "deno-workspace.json",
     ".deno-workspace.json",
     "deno-workspace.ts",
+    ".deno-workspace.ts",
   ];
 
   for (const file of files) {

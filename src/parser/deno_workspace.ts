@@ -26,7 +26,10 @@ async function loadDenoWorkspace(): Promise<DenoWorkspace> {
       throw new WorkspaceNotFoundError();
     }
 
-    if (e instanceof YAMLError || e instanceof ReferenceError || e instanceof TypeError) {
+    if (
+      e instanceof YAMLError || e instanceof ReferenceError ||
+      e instanceof TypeError
+    ) {
       throw new WorkspaceFileIsMalformed(e.message);
     }
 

@@ -1,6 +1,8 @@
 import { resolve } from "../../deps.ts";
 
-function readFirstExistingFile(files: string[]): {path: string, content: string} {
+function readFirstExistingFile(
+  files: string[],
+): { path: string; content: string } {
   const [firstFile, ...restFiles] = files;
   try {
     const firstFileFullPath = resolve(firstFile);
@@ -8,7 +10,7 @@ function readFirstExistingFile(files: string[]): {path: string, content: string}
     const decoder = new TextDecoder("utf-8");
     return {
       path: firstFileFullPath,
-      content: decoder.decode(fileBytes)
+      content: decoder.decode(fileBytes),
     };
   } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
