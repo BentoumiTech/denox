@@ -1,6 +1,14 @@
 import { DenoOptionValue } from "../interfaces.ts";
 
-type TypeOfValues = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+type TypeOfValues =
+  | "string"
+  | "number"
+  | "bigint"
+  | "boolean"
+  | "symbol"
+  | "undefined"
+  | "object"
+  | "function";
 type OptionTypeValues = TypeOfValues | "string[]" | "mixed[]";
 
 function _typeoffNumberAsString(value: unknown): TypeOfValues {
@@ -26,4 +34,4 @@ function getOptionType(value: DenoOptionValue): OptionTypeValues {
   return typeof value;
 }
 
-export { getOptionType };
+export { getOptionType, OptionTypeValues };

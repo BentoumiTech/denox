@@ -16,19 +16,31 @@ async function loadDenoWorkspace(): Promise<DenoWorkspace> {
     );
 
     if (extname(denoWorkspaceFilePath) === ".ts") {
-      const { workspace } = await import(denoWorkspaceFilePath) as {
-        workspace: DenoWorkspace;
-      };
-      return workspace;
+      return await _loadTSWorkspace(denoWorkspaceFilePath);
     }
 
-    const denoWorkspaceFileContent = await getFileContent(
-      denoWorkspaceFilePath,
-    );
-    return parseYaml(denoWorkspaceFileContent) as DenoWorkspace;
+    return await _loadYAMLWorkspace(denoWorkspaceFilePath) as DenoWorkspace;
   } catch (e) {
     throw _handleLoadDenoWorkspaceErrors(e);
   }
+}
+
+async function _loadTSWorkspace(
+  denoWorkspaceFilePath: string,
+): Promise<DenoWorkspace> {
+  const { workspace } = await import(denoWorkspaceFilePath) as {
+    workspace: DenoWorkspace;
+  };
+  return workspace;
+}
+
+async function _loadYAMLWorkspace(
+  denoWorkspaceFilePath: string,
+): Promise<DenoWorkspace> {
+  const denoWorkspaceFileContent = await getFileContent(
+    denoWorkspaceFilePath,
+  );
+  return parseYaml(denoWorkspaceFileContent) as DenoWorkspace;
 }
 
 function _handleLoadDenoWorkspaceErrors(e: unknown): Error {

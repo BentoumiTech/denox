@@ -6,11 +6,17 @@ async function getLatestVersion(repoName: string): Promise<string> {
   return data[0].name;
 }
 
-function isCurrentLatestVersion(currentVersion: string, latestVersion: string): boolean {
+function isCurrentLatestVersion(
+  currentVersion: string,
+  latestVersion: string,
+): boolean {
   return new Semver(currentVersion)._(">=", new Semver(latestVersion));
 }
 
-async function upgradeVersionMessage(currentVersion: string, repoName: string): Promise<void> {
+async function upgradeVersionMessage(
+  currentVersion: string,
+  repoName: string,
+): Promise<void> {
   try {
     const latestVersion = await getLatestVersion(repoName);
 
