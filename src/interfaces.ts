@@ -20,3 +20,12 @@ type DenoWorkspace = {
   };
   globals?: WorkspaceGlobal;
 };
+
+export {
+  DenoWorkspace,
+  WorkspaceGlobal,
+  WorkspaceScript,
+  WorkspaceOptions,
+  DenoOptionsEntries,
+  DenoOptionValue,
+};
