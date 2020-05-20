@@ -10,7 +10,6 @@
   <img src="https://img.shields.io/github/v/tag/bentoumitech/denox?style=flat-square" alt="latest SemVer"/>
   <img src="https://img.shields.io/badge/contribution-welcome-brightgreen.svg?style=flat-square" alt="Contribution welcome"/>
   <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square" alt="Commitizen friendly"/>
-  <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square" alt="Commitizen friendly"/>
   <img src="https://img.shields.io/badge/semantic-release-e10079.svg?style=flat-square" alt="Semantic release"/>
   <img src="https://img.shields.io/github/license/BentoumiTech/denox?logo=MIT&style=flat-square" alt="MIT License"/>
   <br />
@@ -35,7 +34,7 @@ $ deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
 
 ## Overview
 
-DenoX is a script runner and workspace wrapper for Deno
+DenoX is a cross platform script runner and workspace wrapper for Deno
 
 Using DenoX, you can set up your workspace scripts permissions and options in declarative code.
 
@@ -53,6 +52,7 @@ $ denox run start
 
 - **DRY** Only write your permissions and options once.
 - **Packaged** Your code can run on a different machine with a short single command `denox run start`
+- **Cross Platform** DenoX support and is tested on Linux, Mac OS and Windows.
 - **Extensible** :soon:
 
 ## Usage
@@ -80,13 +80,67 @@ denox run start
 
 ## Getting Started
 
-Create a file named `deno-workspace.yml` at the root of your Deno project.
+### `deno-workspace` file
 
-> Note: `deno-workspace.yml` format is YAML but it also supports JSON
+Scripts and options need to be defined in a `deno-workspace` file at the root of your project.
+
+DenoX supports YAML, JSON and typescript as format for `deno-workspace`.
+
+In the following examples running `$ denox run start` will execute main.ts file with `example.com` networking permissions
+
+#### YAML
+
+`deno-workspace.yml`
+
+```
+scripts:
+  start:
+    file: main.ts
+    deno_options:
+      allow-net: example.com
+```
+
+#### JSON
+
+`deno-workspace.json`
+
+```
+{
+  "scripts": {
+    "start": {
+      "file": "main.ts",
+      "deno_options": {
+        "allow-net": "example.com"
+      }
+    }
+  }
+}
+```
+
+#### Typescript
+
+`deno-workspace.ts`
+
+```
+import { DenoWorkspace } from "https://denopkg.com/BentoumiTech/denox/src/interfaces.ts";
+
+const workspace: DenoWorkspace = {
+  "scripts": {
+    "start": {
+      "file": "main.ts",
+      "deno_options": {
+        "allow-net": "example.com"
+      }
+    },
+  },
+};
+
+export { workspace };
+```
 
 ## Scripts
 
-You can easily run scripts using denox by adding them to the "scripts" field in `deno-workspace.yml` and run them with `denox run <script-name>`.
+You can easily run scripts using denox by adding them to the "scripts" field in `deno-workspace` and run them with `denox run <script-name>`.
 
 ### Example:
 
