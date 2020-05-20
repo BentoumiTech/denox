@@ -33,9 +33,9 @@ async function exists(filename: string): Promise<boolean> {
   } catch (error) {
     if (error instanceof Deno.errors.NotFound) {
       return false;
-    } else {
-      throw error;
     }
+
+    throw error;
   }
 }
 

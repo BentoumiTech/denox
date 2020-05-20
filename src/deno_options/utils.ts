@@ -15,9 +15,9 @@ function getOptionType(value: DenoOptionValue): OptionTypeValues {
   if (Array.isArray(value)) {
     if (_isStringNumberArray(value)) {
       return "string[]";
-    } else {
-      return "mixed[]";
     }
+
+    return "mixed[]";
   }
 
   return typeof value;

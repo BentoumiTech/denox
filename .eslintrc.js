@@ -7,6 +7,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/ban-ts-ignore": 0,
     "no-console": 0,
+    "no-else-return": "error",
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/camelcase": 0,
     "no-prototype-builtins": 0,
