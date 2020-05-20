@@ -10,8 +10,9 @@ import { parseDenoOptions } from "./deno_options/parse.ts";
 import { CLIArgument } from "./deno_options/build_cli_arguments.ts";
 import { WorkspaceOptions, WorkspaceScript } from "./interfaces.ts";
 
-async function run(scriptName: string, args: string[]): Promise<void> {
+async function run(scriptName: string): Promise<void> {
   try {
+    const args = Deno.args.slice(2);
     const { code } = await _runScript(scriptName, args);
 
     await upgradeVersionMessage(CURRENT_VERSION, GITHUB_REPO_NAME);
@@ -51,7 +52,6 @@ async function _runDenoFile(
   args: string[],
 ): Promise<{ code: number }> {
   const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
-
   const process = Deno.run({
     // @ts-ignore
     cmd: [

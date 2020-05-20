@@ -103,6 +103,9 @@ scripts:
     deno_options:
       allow-net: localhost
       reload: true
+      v8-flags:
+        - --regexp-tier-up
+        - --adjust-os-scheduling-parameters true
 ```
 
 ## Options
