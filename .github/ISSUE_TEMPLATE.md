@@ -1,13 +1,13 @@
 ## Issue Type
 
 <!--
-Select the type by adding a `x` inside the brackets
-e.g. - [x] Bug Report
+Keep the one that applies and remove the others
+e.g. - Bug Report
 -->
 
-- [ ] Bug Report
-- [ ] Feature Request
-- [ ] Other
+- Bug Report
+- Feature Request
+- Other
 
 ## Expected
 
