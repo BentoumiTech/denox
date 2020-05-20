@@ -30,7 +30,7 @@ Deno.test("run script with scoped and global options", async () => {
     async ({ code, output }) => {
       assertEquals(code, 0);
       assertStrContains(output, "I'm text file content");
-      assertStrContains(output, "delectus aut autem");
+      assertStrContains(output, "seed: 0.147205063401058");
     },
   );
 });
