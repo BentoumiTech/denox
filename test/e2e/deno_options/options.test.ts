@@ -46,7 +46,7 @@ Deno.test("test permissions are applied", async () => {
   );
 });
 
-Deno.test("test all permissions are applied", async () => {
+Deno.test("test allow-all permissions are applied", async () => {
   await testDenoXRun(
     "all-permissions",
     "test/fixture/deno_options",
@@ -85,7 +85,45 @@ Deno.test("test all permissions are applied", async () => {
   );
 });
 
-// TODO: Add fornon granted permissions
+Deno.test("test false permissions are applied", async () => {
+  await testDenoXRun(
+    "false-permissions",
+    "test/fixture/deno_options",
+    async ({ output, code }) => {
+      assertEquals(code, 0);
+
+      assertStrContains(
+        output,
+        'allow-env: PermissionStatus { state: "prompt" }',
+      );
+      assertStrContains(
+        output,
+        'allow-hrtime: PermissionStatus { state: "prompt" }',
+      );
+      assertStrContains(
+        output,
+        'allow-net: PermissionStatus { state: "granted" }',
+      );
+      assertStrContains(
+        output,
+        'allow-plugin: PermissionStatus { state: "prompt" }',
+      );
+      assertStrContains(
+        output,
+        'allow-read: PermissionStatus { state: "granted" }',
+      );
+      assertStrContains(
+        output,
+        'allow-run: PermissionStatus { state: "prompt" }',
+      );
+      assertStrContains(
+        output,
+        'allow-write: PermissionStatus { state: "granted" }',
+      );
+    },
+  );
+});
+
 Deno.test("test seed option is applied", async () => {
   await testDenoXRun(
     "seed",
