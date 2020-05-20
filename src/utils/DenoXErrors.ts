@@ -25,7 +25,7 @@ class ScriptNotFoundError extends DenoXError {
 class WorkspaceFileIsMalformed extends DenoXError {
   constructor(parserMessage: string) {
     super(`
-      "deno-workspace.yml" file is not valid
+      deno-workspace file is not valid
 
       ${parserMessage}
     `);
