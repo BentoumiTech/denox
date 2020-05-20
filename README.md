@@ -59,7 +59,7 @@ $ denox run start
 
 ```bash
 $ denox --help
-denox v0.2.0
+denox v0.4.0
 
 Usage:
   $ denox <command> [options]
