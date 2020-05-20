@@ -15,6 +15,17 @@ scripts:
     deno_options:
       allow-all: true
       unstable: true
+  false-permissions:
+    file: permissions.ts
+    deno_options:
+      allow-env: false
+      allow-hrtime: false
+      allow-net: google.com
+      allow-plugin: false
+      allow-read: ./files
+      allow-run: false
+      allow-write: ./files
+      unstable: true
   seed:
     file: seed.ts
     deno_options:

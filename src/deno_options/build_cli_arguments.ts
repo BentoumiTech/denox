@@ -1,9 +1,22 @@
 import { DenoOptionsEntries, DenoOptionValue } from "../interfaces.ts";
-import { getOptionType } from "./utils.ts";
+import { getOptionType, OptionTypeValues } from "./utils.ts";
 import { optionsDefinitions } from "./const.ts";
 
-type CLIArgument = string | [string, number];
+type CLIArgument = string | number | [string, number];
 type hashCliArgType = { name: string; value: string | boolean | number };
+
+function buildDenoCLIOptionsArgs(
+  denoOptions: DenoOptionsEntries,
+): CLIArgument[] {
+  const argumentsOptions: CLIArgument[] = [];
+
+  for (const [option, value] of Object.entries(denoOptions)) {
+    const argumentOption = _transformToCLIArguments(option, value);
+    argumentsOptions.push(argumentOption);
+  }
+
+  return argumentsOptions.filter((e) => e).flat(Infinity);
+}
 
 function _hashToCLIArg(
   hash: hashCliArgType,
@@ -26,7 +39,10 @@ function _hashToCLIArg(
   return `${cliArgOptionName}${cliArgOptionDefinition.spacer}${hash.value}`;
 }
 
-function _transformToCLIArguments(option: string, value: DenoOptionValue) {
+function _transformToCLIArguments(
+  option: string,
+  value: DenoOptionValue,
+): CLIArgument {
   const optionType = getOptionType(value);
   const optionDefinitionType = optionsDefinitions[option].type.split("|");
 
@@ -36,24 +52,24 @@ function _transformToCLIArguments(option: string, value: DenoOptionValue) {
     );
   }
 
-  const argValue = optionType === "string[]" ? value.join(",") : value;
-
-  const argHash = {
-    name: option,
-    value: argValue,
-  };
+  const argHash = _transformToArgHash(option, value, optionType);
 
   return _hashToCLIArg(argHash);
 }
 
-function buildDenoCLIOptionsArgs(denoOptions: DenoOptionsEntries) {
-  const argumentsOptions: CLIArgument[] = [];
+function _transformToArgHash(
+  option: string,
+  value: DenoOptionValue,
+  optionType: OptionTypeValues,
+): hashCliArgType {
+  const argValue = optionType === "string[]"
+    ? (value as string[]).join(",")
+    : value as string | number | boolean;
 
-  for (const [option, value] of Object.entries(denoOptions)) {
-    argumentsOptions.push(_transformToCLIArguments(option, value));
-  }
-
-  return argumentsOptions.filter((e) => e).flat(Infinity);
+  return {
+    name: option,
+    value: argValue,
+  };
 }
 
-export { buildDenoCLIOptionsArgs };
+export { buildDenoCLIOptionsArgs, CLIArgument };

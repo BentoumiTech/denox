@@ -2,7 +2,7 @@ scripts:
   start:
     file: main.ts
     deno_options:
-      allow-net: jsonplaceholder.typicode.com
+      seed: 1
 globals:
   deno_options:
     allow-read:
