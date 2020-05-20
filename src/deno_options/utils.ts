@@ -11,20 +11,10 @@ type TypeOfValues =
   | "function";
 type OptionTypeValues = TypeOfValues | "string[]" | "mixed[]";
 
-function _typeoffNumberAsString(value: unknown): TypeOfValues {
-  if (typeof value === "number") {
-    return "string";
-  }
-
-  return typeof value;
-}
 
 function getOptionType(value: DenoOptionValue): OptionTypeValues {
   if (Array.isArray(value)) {
-    const isStringArray = value.reduce((accumulator, currentValue) => {
-      return accumulator && _typeoffNumberAsString(currentValue) === "string";
-    }, true);
-    if (isStringArray === true) {
+    if (_isStringNumberArray(value)) {
       return "string[]";
     } else {
       return "mixed[]";
@@ -33,5 +23,20 @@ function getOptionType(value: DenoOptionValue): OptionTypeValues {
 
   return typeof value;
 }
+
+function _isStringNumberArray(value: unknown[]): boolean {
+  return value.reduce((accumulator: boolean, currentValue) => {
+    return accumulator && _typeoffNumberAsString(currentValue) === "string";
+  }, true);
+}
+
+function _typeoffNumberAsString(value: unknown): TypeOfValues {
+  if (typeof value === "number") {
+    return "string";
+  }
+
+  return typeof value;
+}
+
 
 export { getOptionType, OptionTypeValues };
