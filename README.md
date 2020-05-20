@@ -92,7 +92,7 @@ In the following examples running `$ denox run start` will execute main.ts file 
 
 `deno-workspace.yml`
 
-```
+```yaml
 scripts:
   start:
     file: main.ts
@@ -104,7 +104,7 @@ scripts:
 
 `deno-workspace.json`
 
-```
+```json
 {
   "scripts": {
     "start": {
@@ -121,7 +121,7 @@ scripts:
 
 `deno-workspace.ts`
 
-```
+```typescript
 import { DenoWorkspace } from "https://denopkg.com/BentoumiTech/denox/src/interfaces.ts";
 
 const workspace: DenoWorkspace = {
