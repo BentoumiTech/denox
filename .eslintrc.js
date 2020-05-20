@@ -33,7 +33,7 @@ module.exports = {
       "error",
       15,
     ],
-    "no-undef": "error",
+    "no-undef": 0,
   },
   "overrides": [
     {
