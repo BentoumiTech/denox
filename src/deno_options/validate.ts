@@ -6,6 +6,13 @@ import {
 import { getOptionType } from "./utils.ts";
 import { DenoOptionsEntries } from "../interfaces.ts";
 
+function validateOptions(options: DenoOptionsEntries): void {
+  for (const [optionName, optionValue] of Object.entries(options)) {
+    _isOptionValid(optionName);
+    _isOptionTypeValid(optionName, optionValue);
+  }
+}
+
 function _isOptionValid(optionName: string): void {
   if (optionsDefinitions.hasOwnProperty(optionName) === false) {
     throw new DenoOptionNotRecognized(optionName);
@@ -26,12 +33,4 @@ function _isOptionTypeValid(optionName: string, optionValue: unknown): void {
     );
   }
 }
-
-function validateOptions(options: DenoOptionsEntries): void {
-  for (const [optionName, optionValue] of Object.entries(options)) {
-    _isOptionValid(optionName);
-    _isOptionTypeValid(optionName, optionValue);
-  }
-}
-
 export { validateOptions };

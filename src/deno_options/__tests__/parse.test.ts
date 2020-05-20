@@ -3,7 +3,7 @@ import { parseDenoOptions } from "../parse.ts";
 import { DenoOptionIncorrectType } from "../../utils/DenoXErrors.ts";
 
 Deno.test("deno_options not defined", () => {
-  const script = { file: ''};
+  const script = { file: "" };
   const global = {};
   const denoOptions = parseDenoOptions(global, script);
 
@@ -14,42 +14,41 @@ Deno.test("deno_options not defined", () => {
 });
 
 Deno.test("deno_options only defined in globals", () => {
-  const script = { file: ''};
-  const global = {deno_options: {'allow-read': true}};
+  const script = { file: "" };
+  const global = { deno_options: { "allow-read": true } };
   const denoOptions = parseDenoOptions(global, script);
 
   assertEquals(
     denoOptions,
-    ['--allow-read'],
+    ["--allow-read"],
   );
 });
 
 Deno.test("deno_options only defined in script", () => {
-  const script = {deno_options: {'allow-read': true}, file: ''};
+  const script = { deno_options: { "allow-read": true }, file: "" };
   const global = {};
   const denoOptions = parseDenoOptions(global, script);
 
   assertEquals(
     denoOptions,
-    ['--allow-read'],
+    ["--allow-read"],
   );
 });
 
 Deno.test("deno_options only defined in script and globals", () => {
-  const script = {deno_options: {'allow-read': true}, file: ''};
-  const global = {deno_options: {'allow-write': true}};
+  const script = { deno_options: { "allow-read": true }, file: "" };
+  const global = { deno_options: { "allow-write": true } };
   const denoOptions = parseDenoOptions(global, script);
 
   assertEquals(
     denoOptions,
-    ['--allow-write', '--allow-read'],
+    ["--allow-write", "--allow-read"],
   );
 });
 
-
 Deno.test("deno_options script overwrite globals one", () => {
-  const script = {deno_options: {'allow-read': false}, file: ''};
-  const global = {deno_options: {'allow-read': true}};
+  const script = { deno_options: { "allow-read": false }, file: "" };
+  const global = { deno_options: { "allow-read": true } };
   const denoOptions = parseDenoOptions(global, script);
 
   assertEquals(
@@ -58,13 +57,11 @@ Deno.test("deno_options script overwrite globals one", () => {
   );
 });
 
-
 Deno.test("validation error get thrown", () => {
-  const script = {deno_options: {'allow-read': false}, file: ''};
-  const global = {deno_options: {'allow-hrtime': 'string'}};
+  const script = { deno_options: { "allow-read": false }, file: "" };
+  const global = { deno_options: { "allow-hrtime": "string" } };
 
   assertThrows(() => {
     parseDenoOptions(global, script);
   }, DenoOptionIncorrectType);
 });
-

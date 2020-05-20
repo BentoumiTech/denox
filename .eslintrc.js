@@ -14,23 +14,23 @@ module.exports = {
       "error",
       {
         "max": 20,
-        "skipComments": true
+        "skipComments": true,
       },
     ],
     "no-shadow": "error",
     "max-params": [
       "error",
-      3
+      3,
     ],
     "max-statements-per-line": [
       "error",
       {
-        "max": 2
-      }
+        "max": 2,
+      },
     ],
     "complexity": [
       "error",
-      15
+      15,
     ],
     "no-undef": "error",
   },

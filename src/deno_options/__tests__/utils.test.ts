@@ -2,47 +2,47 @@ import { assertEquals } from "../../../dev_deps.ts";
 import { getOptionType } from "../utils.ts";
 
 Deno.test("string[]", () => {
-  const optionType = getOptionType(['first', 'second']);
+  const optionType = getOptionType(["first", "second"]);
 
   assertEquals(
     optionType,
-    'string[]',
+    "string[]",
   );
 });
 
 Deno.test("string[] with numbers", () => {
-  const optionType = getOptionType(['first', 2]);
+  const optionType = getOptionType(["first", 2]);
 
   assertEquals(
     optionType,
-    'string[]',
+    "string[]",
   );
 });
 
 Deno.test("mixed[]", () => {
-  const optionType = getOptionType(['first', {'test': 'string'}]);
+  const optionType = getOptionType(["first", { "test": "string" }]);
 
   assertEquals(
     optionType,
-    'mixed[]',
+    "mixed[]",
   );
 });
 
 Deno.test("object", () => {
-  const optionType = getOptionType({'test': 'string'});
+  const optionType = getOptionType({ "test": "string" });
 
   assertEquals(
     optionType,
-    'object',
+    "object",
   );
 });
 
 Deno.test("string", () => {
-  const optionType = getOptionType('string');
+  const optionType = getOptionType("string");
 
   assertEquals(
     optionType,
-    'string',
+    "string",
   );
 });
 
@@ -51,7 +51,7 @@ Deno.test("number", () => {
 
   assertEquals(
     optionType,
-    'number',
+    "number",
   );
 });
 
@@ -60,6 +60,6 @@ Deno.test("boolean", () => {
 
   assertEquals(
     optionType,
-    'boolean',
+    "boolean",
   );
 });

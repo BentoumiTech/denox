@@ -11,7 +11,6 @@ type TypeOfValues =
   | "function";
 type OptionTypeValues = TypeOfValues | "string[]" | "mixed[]";
 
-
 function getOptionType(value: DenoOptionValue): OptionTypeValues {
   if (Array.isArray(value)) {
     if (_isStringNumberArray(value)) {
@@ -37,6 +36,5 @@ function _typeoffNumberAsString(value: unknown): TypeOfValues {
 
   return typeof value;
 }
-
 
 export { getOptionType, OptionTypeValues };
