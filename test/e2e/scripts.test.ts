@@ -1,5 +1,10 @@
 import { assertEquals, assertStrContains } from "../../dev_deps.ts";
 import { testDenoXRun } from "../utils/denox-run.ts";
+import replaceEnvVars from '../../src/utils/replaceEnvVars.ts'
+
+// Set the env vars we'll need for testing.
+Deno.env.set('ENV_VAR_1', 'Deno');
+Deno.env.set('ENV_VAR_2', 'Script');
 
 Deno.test("Return an error when script doesn't exist", async () => {
   await testDenoXRun(
@@ -12,7 +17,7 @@ Deno.test("Return an error when script doesn't exist", async () => {
   );
 });
 
-Deno.test("execute exising script", async () => {
+Deno.test("execute existing script", async () => {
   await testDenoXRun(
     "start",
     "test/fixture/single_script",
@@ -30,6 +35,40 @@ Deno.test("execute existing script when multiple are specified", async () => {
     async ({ code, output }) => {
       assertEquals(code, 0);
       assertStrContains(output, "Hello World Develop!");
+    },
+  );
+});
+
+Deno.test("execute existing inline script when multiple are specified with no environment variables", async () => {
+  await testDenoXRun(
+    "inlineNoEnv",
+    "test/fixture/multiple_scripts",
+    async ({ code, output }) => {
+      assertEquals(code, 0);
+      assertStrContains(output, "my name is: Deno");
+    },
+  );
+});
+
+Deno.test("execute existing inline script when multiple are specified with multiple environment variables", async () => {
+  await testDenoXRun(
+    "inlineEnv",
+    "test/fixture/multiple_scripts",
+    async ({ code, output }) => {
+      assertEquals(code, 0);
+      assertStrContains(output, "my name is: Deno and my last name is: Script");
+    },
+  );
+});
+
+
+Deno.test("execute existing inline deno script when multiple are specified", async () => {
+  await testDenoXRun(
+    "inline",
+    "test/fixture/multiple_scripts",
+    async ({ code, output }) => {
+      assertEquals(code, 0);
+      assertStrContains(output, "Hello World!");
     },
   );
 });

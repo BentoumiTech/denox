@@ -2,6 +2,7 @@ import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
 import { ScriptNotFoundError } from "./utils/DenoXErrors.ts";
+import replaceEnvVars from './utils/replaceEnvVars.ts';
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
@@ -21,7 +22,7 @@ async function run(scriptName: string): Promise<void> {
   } catch (e) {
     if (e instanceof Deno.errors.PermissionDenied) {
       consolex.error(`
-        Please reinstall denox with the correct pemissions
+        Please reinstall denox with the correct permissions
         deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
       `);
     } else {
@@ -43,7 +44,36 @@ async function _runScript(
     throw new ScriptNotFoundError(scriptName);
   }
 
-  return await _runDenoFile(workspaceScript, workspaceGlobal, args);
+  return workspaceScript.file
+    ? await _runDenoFile(workspaceScript, workspaceGlobal, args)
+    : await _runInlineScript(workspaceScript, workspaceGlobal, args);
+}
+
+async function _runInlineScript(
+  workspaceScript: WorkspaceScript,
+  workspaceGlobal: WorkspaceOptions,
+  args: string[],
+): Promise<{ code: number }> {
+  // Use or replacement function to get any env variables switched out.
+  const replaced = replaceEnvVars(workspaceScript?.cmd, Deno.env.toObject());
+  // Split on all the spaces to create an array of arguments
+  const cmd: any[] = replaced.split(' ').concat(args) || [];
+  const [mainScript] = cmd;
+
+  // If the first argument is deno then we want the deno options.
+  if (mainScript === 'deno') {
+    const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
+
+    cmd.concat(denoOptions);
+  }
+
+  const process = Deno.run({
+    cmd
+  });
+
+  const { code } = await process.status();
+
+  return { code };
 }
 
 async function _runDenoFile(
