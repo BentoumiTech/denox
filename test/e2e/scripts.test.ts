@@ -1,10 +1,5 @@
 import { assertEquals, assertStrContains } from "../../dev_deps.ts";
 import { testDenoXRun } from "../utils/denox-run.ts";
-import replaceEnvVars from '../../src/utils/replaceEnvVars.ts'
-
-// Set the env vars we'll need for testing.
-Deno.env.set('ENV_VAR_1', 'Deno');
-Deno.env.set('ENV_VAR_2', 'Script');
 
 Deno.test("Return an error when script doesn't exist", async () => {
   await testDenoXRun(
@@ -61,8 +56,12 @@ Deno.test("execute existing inline script when multiple are specified with multi
   );
 });
 
+Deno.env.set("ENV_VAR_1", "Deno");
+Deno.env.set("ENV_VAR_2", "Script");
 
 Deno.test("execute existing inline deno script when multiple are specified", async () => {
+  // Set the env vars we'll need for testing.
+
   await testDenoXRun(
     "inline",
     "test/fixture/multiple_scripts",

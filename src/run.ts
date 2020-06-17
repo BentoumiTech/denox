@@ -2,7 +2,7 @@ import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
 import { ScriptNotFoundError } from "./utils/DenoXErrors.ts";
-import replaceEnvVars from './utils/replaceEnvVars.ts';
+import replaceEnvVars from "./utils/replaceEnvVars.ts";
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
@@ -54,21 +54,15 @@ async function _runInlineScript(
   workspaceGlobal: WorkspaceOptions,
   args: string[],
 ): Promise<{ code: number }> {
-  // Use or replacement function to get any env variables switched out.
-  const replaced = replaceEnvVars(workspaceScript?.cmd, Deno.env.toObject());
-  // Split on all the spaces to create an array of arguments
-  const cmd: any[] = replaced.split(' ').concat(args) || [];
-  const [mainScript] = cmd;
+  const cmd: any[] = replaceEnvVars(workspaceScript?.cmd, Deno.env.toObject())
+    .split(" ")
+    .concat(args) || [];
+  const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
 
-  // If the first argument is deno then we want the deno options.
-  if (mainScript === 'deno') {
-    const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
-
-    cmd.concat(denoOptions);
-  }
+  cmd.concat(denoOptions);
 
   const process = Deno.run({
-    cmd
+    cmd,
   });
 
   const { code } = await process.status();

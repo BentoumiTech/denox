@@ -10,9 +10,11 @@ type WorkspaceOptions = {
 };
 
 // There must be either a file or a command provided.
-type WorkspaceScript = (
-  { file: string; cmd?: undefined } 
-  | { cmd: string; file?: undefined })
+type WorkspaceScript =
+  & (
+    | { file: string; cmd?: undefined }
+    | { cmd: string; file?: undefined }
+  )
   & WorkspaceOptions;
 
 type WorkspaceGlobal = WorkspaceOptions;
@@ -26,8 +28,8 @@ type DenoWorkspace = {
 
 // This type is exported from dotenv, which I'm assuming you will be using for this port.
 type DotenvConfig = {
-  [key: string]: DotEnvConfigValue
-}
+  [key: string]: DotEnvConfigValue;
+};
 
 export {
   DenoWorkspace,
@@ -36,5 +38,5 @@ export {
   WorkspaceOptions,
   DenoOptionsEntries,
   DenoOptionValue,
-  DotenvConfig
+  DotenvConfig,
 };

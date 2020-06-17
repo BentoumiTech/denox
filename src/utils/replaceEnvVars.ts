@@ -1,5 +1,5 @@
 // TODO - Update this with the dotenv interface.
-import { DotenvConfig } from '../interfaces.ts';
+import { DotenvConfig } from "../interfaces.ts";
 
 /**
  * This is added here in anticipation of https://github.com/BentoumiTech/denox/issues/12 being completed.
@@ -9,17 +9,17 @@ import { DotenvConfig } from '../interfaces.ts';
 
 function replaceEnvVars(cmd: string | undefined, env: DotenvConfig): string {
   const envKeys: string[] = Object.keys(env);
-  
+
   if (!cmd) {
-    throw new ReferenceError('A command is required by this function.');
+    throw new ReferenceError("A command is required by this function.");
   }
 
-  // I'm not sure if you have a loop preference? This is the method I have become accustom to in terms of readability and performance. 
+  // I'm not sure if you have a loop preference? This is the method I have become accustom to in terms of readability and performance.
   envKeys.forEach((envKey: string) => {
-    // This is a little ugly but I like explicit variable declaration for readability. 
+    // This is a little ugly but I like explicit variable declaration for readability.
     const envValue: string = env[envKey];
-      // String are immutable so it doesn't matter if we directly work on the cmd string.
-      cmd = cmd?.replace(`\${${envKey}}`, envValue);
+    // String are immutable so it doesn't matter if we directly work on the cmd string.
+    cmd = cmd?.replace(`\${${envKey}}`, envValue);
   });
 
   return cmd;
