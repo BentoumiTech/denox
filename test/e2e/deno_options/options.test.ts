@@ -2,6 +2,7 @@ import {
   assertEquals,
   assertStrContains,
   resolve,
+  stripColor,
   join,
 } from "../../../dev_deps.ts";
 import { testDenoXRun } from "../../utils/denox-run.ts";
@@ -14,6 +15,7 @@ Deno.test("test permissions are applied", async () => {
     async ({ output, code }) => {
       assertEquals(code, 0);
 
+      output = stripColor(output);
       assertStrContains(
         output,
         'allow-env: PermissionStatus { state: "granted" }',
@@ -53,6 +55,7 @@ Deno.test("test allow-all permissions are applied", async () => {
     async ({ output, code }) => {
       assertEquals(code, 0);
 
+      output = stripColor(output);
       assertStrContains(
         output,
         'allow-env: PermissionStatus { state: "granted" }',
@@ -92,6 +95,7 @@ Deno.test("test false permissions are applied", async () => {
     async ({ output, code }) => {
       assertEquals(code, 0);
 
+      output = stripColor(output);
       assertStrContains(
         output,
         'allow-env: PermissionStatus { state: "prompt" }',
@@ -130,6 +134,7 @@ Deno.test("test seed option is applied", async () => {
     "test/fixture/deno_options",
     async ({ output, code }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "seed: 0.147205063401058");
     },
   );
@@ -141,6 +146,7 @@ Deno.test("test quiet option is applied", async () => {
     "test/fixture/deno_options",
     async ({ output, code }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "Only console.log\n");
     },
   );
@@ -164,6 +170,7 @@ Deno.test("test log-level option is applied", async () => {
     "test/fixture/deno_options",
     async ({ code, output }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "DEBUG JS");
     },
   );
@@ -177,6 +184,7 @@ Deno.test("test config option is applied", async () => {
       const tsconfigPath = join("files", "tsconfig.json");
 
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, tsconfigPath);
     },
   );
@@ -188,6 +196,7 @@ Deno.test("test import map option is applied", async () => {
     "test/fixture/deno_options",
     async ({ code, errOutput }) => {
       assertEquals(code, 0);
+      errOutput = stripColor(errOutput);
       assertStrContains(
         errOutput,
         'ModuleSpecifier("https://deno.land/std/http/"',
