@@ -21,7 +21,7 @@ async function run(scriptName: string): Promise<void> {
   } catch (e) {
     if (e instanceof Deno.errors.PermissionDenied) {
       consolex.error(`
-        Please reinstall denox with the correct pemissions
+        Please reinstall denox with the correct permissions
         deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
       `);
     } else {
