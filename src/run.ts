@@ -53,6 +53,9 @@ async function _runDenoFile(
 ): Promise<{ code: number }> {
   const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
   const process = Deno.run({
+    // ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
+    /* eslint @typescript-eslint/ban-ts-comment: "off" */
+    // deno-lint-ignore ban-ts-comment
     // @ts-ignore
     cmd: [
       "deno",
