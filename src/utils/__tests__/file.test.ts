@@ -11,13 +11,13 @@ Deno.test("read file", async () => {
   );
 });
 
-Deno.test("throw error if file don't exisit", async () => {
+Deno.test("throw error if file doesn't exist", async () => {
   await assertThrowsAsync(async ()=> {
     await getFileContent('./src/utils/__tests__/fixture/no-found.txt')
   }, Deno.errors.NotFound);
 });
 
-Deno.test("return first exisiting path", async () => {
+Deno.test("return first existing path", async () => {
   const firstExistingPath = await getFirstExistingPath([
     './src/utils/__tests__/fixture/list-files/first.txt',
     './src/utils/__tests__/fixture/list-files/second.txt',

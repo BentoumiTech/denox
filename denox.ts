@@ -15,8 +15,12 @@ cli
   .example("denox run start arg1 arg2 --namedArg=value")
   .action(run);
 
+// ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
+/* eslint @typescript-eslint/ban-ts-comment: "off" */
+// deno-lint-ignore ban-ts-comment
 // @ts-ignore
 cli.on("command:*", () => {
+  // deno-lint-ignore ban-ts-comment
   // @ts-ignore
   error(`Invalid command: ${cli.args.join(" ")}`);
 });
