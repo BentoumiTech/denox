@@ -21,5 +21,7 @@ jobs:
         node-version: '12'
     - run: npm install typescript eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent --save-dev
     - run: ./node_modules/.bin/eslint **/**.ts --ext .ts
+    - run: deno lint --unstable
+      if: startsWith(matrix.deno, '1.2')
     - run: deno install -Af denox.ts
     - run: deno test -A --failfast src/ test/

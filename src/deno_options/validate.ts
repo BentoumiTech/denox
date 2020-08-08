@@ -14,7 +14,7 @@ function validateOptions(options: DenoOptionsEntries): void {
 }
 
 function _isOptionValid(optionName: string): void {
-  if (optionsDefinitions.hasOwnProperty(optionName) === false) {
+  if (Object.prototype.hasOwnProperty.call(optionsDefinitions, optionName) === false) {
     throw new DenoOptionNotRecognized(optionName);
   }
 }
