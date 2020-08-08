@@ -8,7 +8,7 @@ import {
 import { testDenoXRun } from "../../utils/denox-run.ts";
 import { exists } from "../../../src/utils/file.ts";
 
-Deno.test("test permissions are applied", async () => {
+Deno.test("permissions are applied", async () => {
   await testDenoXRun(
     "permissions",
     "test/fixture/deno_options",
@@ -48,7 +48,7 @@ Deno.test("test permissions are applied", async () => {
   );
 });
 
-Deno.test("test allow-all permissions are applied", async () => {
+Deno.test("allow-all permissions are applied", async () => {
   await testDenoXRun(
     "all-permissions",
     "test/fixture/deno_options",
@@ -88,7 +88,7 @@ Deno.test("test allow-all permissions are applied", async () => {
   );
 });
 
-Deno.test("test false permissions are applied", async () => {
+Deno.test("false permissions are applied", async () => {
   await testDenoXRun(
     "false-permissions",
     "test/fixture/deno_options",
@@ -128,7 +128,7 @@ Deno.test("test false permissions are applied", async () => {
   );
 });
 
-Deno.test("test seed option is applied", async () => {
+Deno.test("seed option is applied", async () => {
   await testDenoXRun(
     "seed",
     "test/fixture/deno_options",
@@ -140,7 +140,7 @@ Deno.test("test seed option is applied", async () => {
   );
 });
 
-Deno.test("test quiet option is applied", async () => {
+Deno.test("quiet option is applied", async () => {
   await testDenoXRun(
     "quiet",
     "test/fixture/deno_options",
@@ -152,7 +152,7 @@ Deno.test("test quiet option is applied", async () => {
   );
 });
 
-Deno.test("test lock option is applied", async () => {
+Deno.test("lock option is applied", async () => {
   await testDenoXRun("lock", "test/fixture/deno_options", async ({ code }) => {
     const lockFilePath = resolve("../../fixture/deno_options/files/lock.json");
     const isLockFilePresent = await exists(lockFilePath);
@@ -164,7 +164,7 @@ Deno.test("test lock option is applied", async () => {
   });
 });
 
-Deno.test("test log-level option is applied", async () => {
+Deno.test("log-level option is applied", async () => {
   await testDenoXRun(
     "log-level",
     "test/fixture/deno_options",
@@ -176,21 +176,19 @@ Deno.test("test log-level option is applied", async () => {
   );
 });
 
-Deno.test("test config option is applied", async () => {
+Deno.test("config option is applied", async () => {
   await testDenoXRun(
     "config",
     "test/fixture/deno_options",
     async ({ code, output }) => {
-      const tsconfigPath = join("files", "tsconfig.json");
-
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, tsconfigPath);
+      assertStrContains(output, 'tsconfig.json');
     },
   );
 });
 
-Deno.test("test import map option is applied", async () => {
+Deno.test("import map option is applied", async () => {
   await testDenoXRun(
     "import-map",
     "test/fixture/deno_options",
@@ -205,7 +203,7 @@ Deno.test("test import map option is applied", async () => {
   );
 });
 
-Deno.test("test v8-flags, cached-only, cert, no-remote, reload options do not crash", async () => {
+Deno.test("v8-flags, cached-only, cert, no-remote, reload options do not crash", async () => {
   await testDenoXRun(
     "rest-options",
     "test/fixture/deno_options",
