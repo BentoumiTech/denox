@@ -9,7 +9,7 @@ async function testDenoXRun(
   assertRunOutput: (
     denoxOutput: { output: string; errOutput: string; code: number },
   ) => Promise<void>,
-  args: string[] = []
+  args: string[] = [],
 ): Promise<void> {
   await changeAndRestoreCWD(
     workspaceFolder,
@@ -24,7 +24,11 @@ async function testDenoXRun(
   );
 }
 
-function _denoXRun(denoxPath: string, scriptName: string, args: string[]): Deno.Process {
+function _denoXRun(
+  denoxPath: string,
+  scriptName: string,
+  args: string[],
+): Deno.Process {
   return Deno.run({
     cmd: [
       "deno",
@@ -33,7 +37,7 @@ function _denoXRun(denoxPath: string, scriptName: string, args: string[]): Deno.
       denoxPath,
       "run",
       scriptName,
-      ...args
+      ...args,
     ],
     stdout: "piped",
     stderr: "piped",

@@ -1,4 +1,8 @@
-import { assertEquals, assertStrContains, stripColor } from "../../../dev_deps.ts";
+import {
+  assertEquals,
+  assertStrContains,
+  stripColor,
+} from "../../../dev_deps.ts";
 import { testDenoXRun } from "../../utils/denox-run.ts";
 
 Deno.test("run script with scoped options", async () => {
