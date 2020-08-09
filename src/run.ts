@@ -2,6 +2,7 @@ import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
 import { ScriptNotFoundError } from "./utils/DenoXErrors.ts";
+import replaceEnvVars from "./utils/replaceEnvVars.ts";
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
@@ -43,7 +44,30 @@ async function _runScript(
     throw new ScriptNotFoundError(scriptName);
   }
 
-  return await _runDenoFile(workspaceScript, workspaceGlobal, args);
+  return workspaceScript.file
+    ? await _runDenoFile(workspaceScript, workspaceGlobal, args)
+    : await _runInlineScript(workspaceScript, workspaceGlobal, args);
+}
+
+async function _runInlineScript(
+  workspaceScript: WorkspaceScript,
+  workspaceGlobal: WorkspaceOptions,
+  args: string[],
+): Promise<{ code: number }> {
+  const cmd: any[] = replaceEnvVars(workspaceScript?.cmd, Deno.env.toObject())
+    .split(" ")
+    .concat(args) || [];
+  const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
+
+  cmd.concat(denoOptions);
+
+  const process = Deno.run({
+    cmd,
+  });
+
+  const { code } = await process.status();
+
+  return { code };
 }
 
 async function _runDenoFile(

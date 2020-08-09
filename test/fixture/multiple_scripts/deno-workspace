@@ -3,4 +3,10 @@ scripts:
     file: main.ts
   develop:
     file: develop.ts
+  inline:
+    cmd: deno run main.ts
+  inlineNoEnv:
+    cmd: "echo my name is: Deno"
+  inlineEnv:
+    cmd: "echo my name is: ${ENV_VAR_1} and my last name is: ${ENV_VAR_2}"
 
