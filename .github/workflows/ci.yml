@@ -19,8 +19,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
-    - run: npm install typescript eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent --save-dev
-    - run: ./node_modules/.bin/eslint **/**.ts --ext .ts
+    - run: npm install -g typescript eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin tsc-silent
+    - run: eslint **/**.ts --ext .ts
     - run: deno lint --unstable
       if: startsWith(matrix.deno, '1.2')
     - run: deno install -Af denox.ts
