@@ -1,9 +1,15 @@
-import { assertEquals, assertThrowsAsync, resolve, assertStrContains } from "../../../dev_deps.ts";
+import {
+  assertEquals,
+  assertThrowsAsync,
+  resolve,
+  assertStrContains,
+} from "../../../dev_deps.ts";
 import { getFileContent, getFirstExistingPath, exists } from "../file.ts";
 
-
 Deno.test("read file", async () => {
-  const fileContent = await getFileContent('./src/utils/__tests__/fixture/file.txt')
+  const fileContent = await getFileContent(
+    "./src/utils/__tests__/fixture/file.txt",
+  );
 
   assertStrContains(
     fileContent,
@@ -12,17 +18,17 @@ Deno.test("read file", async () => {
 });
 
 Deno.test("throw error if file doesn't exist", async () => {
-  await assertThrowsAsync(async ()=> {
-    await getFileContent('./src/utils/__tests__/fixture/no-found.txt')
+  await assertThrowsAsync(async () => {
+    await getFileContent("./src/utils/__tests__/fixture/no-found.txt");
   }, Deno.errors.NotFound);
 });
 
 Deno.test("return first existing path", async () => {
   const firstExistingPath = await getFirstExistingPath([
-    './src/utils/__tests__/fixture/list-files/first.txt',
-    './src/utils/__tests__/fixture/list-files/second.txt',
-    './src/utils/__tests__/fixture/list-files/third.txt',
-  ])
+    "./src/utils/__tests__/fixture/list-files/first.txt",
+    "./src/utils/__tests__/fixture/list-files/second.txt",
+    "./src/utils/__tests__/fixture/list-files/third.txt",
+  ]);
 
   assertEquals(
     firstExistingPath,
@@ -31,18 +37,17 @@ Deno.test("return first existing path", async () => {
 });
 
 Deno.test("throw error if no file in list exist", async () => {
-  await assertThrowsAsync(async ()=> {
+  await assertThrowsAsync(async () => {
     await getFirstExistingPath([
-      './src/utils/__tests__/fixture/list-files/fourth.txt',
-      './src/utils/__tests__/fixture/list-files/fifth.txt',
-      './src/utils/__tests__/fixture/list-files/sixth.txt',
-    ])
+      "./src/utils/__tests__/fixture/list-files/fourth.txt",
+      "./src/utils/__tests__/fixture/list-files/fifth.txt",
+      "./src/utils/__tests__/fixture/list-files/sixth.txt",
+    ]);
   }, Deno.errors.NotFound);
 });
 
-
 Deno.test("return true if file exist", async () => {
-  const fileExist = await exists('./src/utils/__tests__/fixture/file.txt')
+  const fileExist = await exists("./src/utils/__tests__/fixture/file.txt");
 
   assertEquals(
     fileExist,
@@ -51,7 +56,9 @@ Deno.test("return true if file exist", async () => {
 });
 
 Deno.test("return false if file is not found", async () => {
-  const fileExist = await exists('./src/utils/__tests__/fixture/file-not-found.txt')
+  const fileExist = await exists(
+    "./src/utils/__tests__/fixture/file-not-found.txt",
+  );
 
   assertEquals(
     fileExist,

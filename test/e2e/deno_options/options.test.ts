@@ -183,7 +183,7 @@ Deno.test("config option is applied", async () => {
     async ({ code, output }) => {
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, 'tsconfig.json');
+      assertStrContains(output, "tsconfig.json");
     },
   );
 });
