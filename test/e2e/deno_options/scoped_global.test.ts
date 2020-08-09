@@ -1,4 +1,8 @@
-import { assertEquals, assertStrContains } from "../../../dev_deps.ts";
+import {
+  assertEquals,
+  assertStrContains,
+  stripColor,
+} from "../../../dev_deps.ts";
 import { testDenoXRun } from "../../utils/denox-run.ts";
 
 Deno.test("run script with scoped options", async () => {
@@ -7,6 +11,7 @@ Deno.test("run script with scoped options", async () => {
     "test/fixture/script_permission",
     async ({ code, output }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "I'm text file content");
     },
   );
@@ -18,6 +23,7 @@ Deno.test("run script with global options", async () => {
     "test/fixture/global_permission",
     async ({ code, output }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "I'm text file content");
     },
   );
@@ -29,6 +35,7 @@ Deno.test("run script with scoped and global options", async () => {
     "test/fixture/script_global_permission",
     async ({ code, output }) => {
       assertEquals(code, 0);
+      output = stripColor(output);
       assertStrContains(output, "I'm text file content");
       assertStrContains(output, "seed: 0.147205063401058");
     },
@@ -41,6 +48,7 @@ Deno.test("run script with erroneous merged scoped and global options", async ()
     "test/fixture/merged_scoped_global__invalid_permission",
     async ({ code, errOutput }) => {
       assertEquals(code, 1);
+      errOutput = stripColor(errOutput);
       assertStrContains(
         errOutput,
         'Uncaught PermissionDenied: network access to "https://jsonplaceho',
