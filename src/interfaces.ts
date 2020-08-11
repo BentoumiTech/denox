@@ -4,15 +4,28 @@ type DenoOptionsEntries = {
   [key: string]: DenoOptionValue;
 };
 
-type WorkspaceOptions = {
+interface WorkspaceEnv {
+  env_file?: string;
+  env_vars?:  {
+    [key: string]: string;
+  };
+}
+
+interface WorkspaceOptions {
   deno_options?: DenoOptionsEntries;
-};
+}
 
-type WorkspaceScript = {
+interface WorkspaceScriptFile {
   file: string;
-} & WorkspaceOptions;
+}
 
-type WorkspaceGlobal = WorkspaceOptions;
+interface WorkspaceScriptCommand {
+  command: string;
+}
+
+type WorkspaceScript = WorkspaceScriptFile | WorkspaceScriptCommand;
+
+type WorkspaceGlobal = WorkspaceOptions & WorkspaceEnv;
 
 type DenoWorkspace = {
   scripts: {
@@ -26,6 +39,7 @@ export {
   WorkspaceGlobal,
   WorkspaceScript,
   WorkspaceOptions,
+  WorkspaceScriptFile,
   DenoOptionsEntries,
   DenoOptionValue,
 };

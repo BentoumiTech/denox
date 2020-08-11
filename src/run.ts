@@ -8,12 +8,11 @@ import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
 import { parseDenoOptions } from "./deno_options/parse.ts";
 import { CLIArgument } from "./deno_options/build_cli_arguments.ts";
-import { WorkspaceOptions, WorkspaceScript } from "./interfaces.ts";
+import { WorkspaceOptions, WorkspaceScript, WorkspaceScriptFile } from "./interfaces.ts";
 
 async function run(scriptName: string): Promise<void> {
   try {
-    const args = Deno.args.slice(2);
-    const { code } = await _runScript(scriptName, args);
+    const { code } = await _runScript(scriptName);
 
     await upgradeVersionMessage(CURRENT_VERSION, GITHUB_REPO_NAME);
 
@@ -32,7 +31,6 @@ async function run(scriptName: string): Promise<void> {
 
 async function _runScript(
   scriptName: string,
-  args: string[],
 ): Promise<{ code: number }> {
   const workspace = await loadDenoWorkspace();
 
@@ -43,15 +41,40 @@ async function _runScript(
     throw new ScriptNotFoundError(scriptName);
   }
 
-  return await _runDenoFile(workspaceScript, workspaceGlobal, args);
+  const env = {};
+  const args = Deno.args.slice(2);
+
+  return await _runDenoFileOrCommand({ workspaceScript, workspaceGlobal, args, env });
 }
 
-async function _runDenoFile(
-  workspaceScript: WorkspaceScript,
-  workspaceGlobal: WorkspaceOptions,
-  args: string[],
-): Promise<{ code: number }> {
-  const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
+type DenoRunParams = {
+  workspaceScript: WorkspaceScript;
+  workspaceGlobal: WorkspaceOptions;
+  args: string[];
+  env?: { [key: string]: string };
+};
+
+async function _runDenoFileOrCommand({ workspaceScript, workspaceGlobal, args, env }: DenoRunParams): Promise<{ code: number }> {
+  workspaceScript as WorkspaceScriptFile
+  const command = workspaceScript.command;
+  const file = (workspaceScript  as WorkspaceScriptFile).file;
+  if (file && command) {
+    // throw cannot have file and command specified only one
+  } else if(file) {
+    return await _runDenoFile({ workspaceScript, workspaceGlobal, args, env });
+  } else if(typeof workspaceScript.command !== undefined) {
+    return await _runCommand({ workspaceScript.command, args, env });
+  }
+  // throw error file or command do not exist
+}
+
+async function _runDenoFile({
+  workspaceScript,
+  workspaceGlobal,
+  args,
+  env
+}: DenoRunParams): Promise<{ code: number }> {
+  const denoOptions = _getDenoOptions(workspaceScript, workspaceGlobal);
   const process = Deno.run({
     // @ts-ignore
     cmd: [
@@ -61,16 +84,39 @@ async function _runDenoFile(
       workspaceScript.file,
       ...args,
     ],
+    env: env,
   });
   const { code } = await process.status();
-
   return { code };
 }
 
-async function _getDenoOptions(
+type DenoRunCommandParams = {
+  command: string;
+  args: string[];
+  env?: { [key: string]: string };
+};
+
+async function _runCommand({
+  command,
+  args,
+  env
+}: DenoRunCommandParams): Promise<{ code: number }> {
+  const process = Deno.run({
+    cmd: [
+      command,
+      ...args,
+    ],
+    env: env,
+  });
+  const { code } = await process.status();
+  return { code };
+}
+
+// get Env call parse env properties
+function _getDenoOptions(
   workspaceScript: WorkspaceScript,
   workspaceGlobal: WorkspaceOptions,
-): Promise<CLIArgument[]> {
+): CLIArgument[] {
   return parseDenoOptions(
     workspaceGlobal,
     workspaceScript,
