@@ -16,8 +16,7 @@ async function loadDenoWorkspace(): Promise<DenoWorkspace> {
     );
 
     if (extname(denoWorkspaceFilePath) === ".ts") {
-      const appendFileScheme = Deno.build.os  == "windows" ? 'file:///' : '';
-      return await _loadTSWorkspace(appendFileScheme + denoWorkspaceFilePath);
+      return await _loadTSWorkspace("file:///" + denoWorkspaceFilePath);
     }
 
     return await _loadYAMLWorkspace(denoWorkspaceFilePath) as DenoWorkspace;

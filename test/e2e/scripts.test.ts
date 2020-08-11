@@ -12,7 +12,7 @@ Deno.test("Return an error when script doesn't exist", async () => {
   );
 });
 
-Deno.test("execute exising script", async () => {
+Deno.test("execute existing script", async () => {
   await testDenoXRun(
     "start",
     "test/fixture/single_script",

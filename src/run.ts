@@ -20,7 +20,7 @@ async function run(scriptName: string): Promise<void> {
   } catch (e) {
     if (e instanceof Deno.errors.PermissionDenied) {
       consolex.error(`
-        Please reinstall denox with the correct pemissions
+        Please reinstall denox with the correct permissions
         deno install -Af -n denox https://denopkg.com/BentoumiTech/denox/denox.ts
       `);
     } else {
@@ -76,6 +76,9 @@ async function _runDenoFile({
 }: DenoRunParams): Promise<{ code: number }> {
   const denoOptions = _getDenoOptions(workspaceScript, workspaceGlobal);
   const process = Deno.run({
+    // ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
+    /* eslint @typescript-eslint/ban-ts-comment: "off" */
+    // deno-lint-ignore ban-ts-comment
     // @ts-ignore
     cmd: [
       "deno",
