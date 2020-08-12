@@ -32,6 +32,22 @@ class WorkspaceFileIsMalformed extends DenoXError {
   }
 }
 
+class WorkspaceMissingFileOrCommand extends DenoXError {
+  constructor(scriptName: string) {
+    super(`
+      Script "${scriptName}" have no file or command specified please add one.
+    `);
+  }
+}
+
+class WorkspaceFileAndCommandSpecified extends DenoXError {
+  constructor(scriptName: string) {
+    super(`
+      Script "${scriptName}" have a file and a command specified please remove one.
+    `);
+  }
+}
+
 class DenoOptionNotRecognized extends DenoXError {
   constructor(option: string) {
     super(`
@@ -58,6 +74,8 @@ export {
   ScriptNotFoundError,
   WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
+  WorkspaceFileAndCommandSpecified,
+  WorkspaceMissingFileOrCommand,
   DenoOptionNotRecognized,
   DenoOptionIncorrectType,
 };

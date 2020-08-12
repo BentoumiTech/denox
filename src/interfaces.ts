@@ -40,6 +40,7 @@ export {
   WorkspaceScript,
   WorkspaceOptions,
   WorkspaceScriptFile,
+  WorkspaceScriptCommand,
   DenoOptionsEntries,
   DenoOptionValue,
 };
