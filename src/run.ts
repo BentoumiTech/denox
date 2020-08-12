@@ -1,14 +1,23 @@
 import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
-import { ScriptNotFoundError, WorkspaceMissingFileOrCommand, WorkspaceFileAndCommandSpecified } from "./utils/DenoXErrors.ts";
+import {
+  ScriptNotFoundError,
+  WorkspaceMissingFileOrCommand,
+  WorkspaceFileAndCommandSpecified,
+} from "./utils/DenoXErrors.ts";
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
 import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
 import { parseDenoOptions } from "./deno_options/parse.ts";
 import { CLIArgument } from "./deno_options/build_cli_arguments.ts";
-import { WorkspaceOptions, WorkspaceScript, WorkspaceScriptFile, WorkspaceScriptCommand } from "./interfaces.ts";
+import {
+  WorkspaceOptions,
+  WorkspaceScript,
+  WorkspaceScriptFile,
+  WorkspaceScriptCommand,
+} from "./interfaces.ts";
 
 async function run(scriptName: string): Promise<void> {
   try {
@@ -44,7 +53,9 @@ async function _runScript(
   const env = {};
   const args = Deno.args.slice(2);
 
-  return await _runDenoFileOrCommand({ scriptName, workspaceScript, workspaceGlobal, args, env });
+  return await _runDenoFileOrCommand(
+    { scriptName, workspaceScript, workspaceGlobal, args, env },
+  );
 }
 
 type DenoRunParams = {
@@ -55,18 +66,29 @@ type DenoRunParams = {
   env?: { [key: string]: string };
 };
 
-async function _runDenoFileOrCommand({ scriptName, workspaceScript, workspaceGlobal, args, env }: DenoRunParams): Promise<{ code: number }> {
-  workspaceScript as WorkspaceScriptFile
-  const command = (workspaceScript  as WorkspaceScriptCommand).command;
-  const file = (workspaceScript  as WorkspaceScriptFile).file;
+async function _runDenoFileOrCommand(
+  { scriptName, workspaceScript, workspaceGlobal, args, env }: DenoRunParams,
+): Promise<{ code: number }> {
+  workspaceScript as WorkspaceScriptFile;
+  const command = (workspaceScript as WorkspaceScriptCommand).command;
+  const file = (workspaceScript as WorkspaceScriptFile).file;
   if (file && command) {
-    throw new WorkspaceFileAndCommandSpecified(scriptName)
-  } else if(typeof file !== undefined) {
-    return await _runDenoFile({ workspaceScript: workspaceScript  as WorkspaceScriptFile, workspaceGlobal, args, env });
-  } else if(typeof command !== undefined) {
-    return await _runCommand({ workspaceScript: workspaceScript as WorkspaceScriptCommand, args, env });
+    throw new WorkspaceFileAndCommandSpecified(scriptName);
+  } else if (typeof file !== undefined) {
+    return await _runDenoFile(
+      {
+        workspaceScript: workspaceScript as WorkspaceScriptFile,
+        workspaceGlobal,
+        args,
+        env,
+      },
+    );
+  } else if (typeof command !== undefined) {
+    return await _runCommand(
+      { workspaceScript: workspaceScript as WorkspaceScriptCommand, args, env },
+    );
   }
-  throw new WorkspaceMissingFileOrCommand(scriptName)
+  throw new WorkspaceMissingFileOrCommand(scriptName);
 }
 
 type DenoRunFileParams = {
@@ -80,7 +102,7 @@ async function _runDenoFile({
   workspaceScript,
   workspaceGlobal,
   args,
-  env
+  env,
 }: DenoRunFileParams): Promise<{ code: number }> {
   const denoOptions = _getDenoOptions(workspaceScript, workspaceGlobal);
   const process = Deno.run({
@@ -110,7 +132,7 @@ type DenoRunCommandParams = {
 async function _runCommand({
   workspaceScript,
   args,
-  env
+  env,
 }: DenoRunCommandParams): Promise<{ code: number }> {
   const process = Deno.run({
     cmd: [

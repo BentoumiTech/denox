@@ -6,7 +6,7 @@ type DenoOptionsEntries = {
 
 interface WorkspaceEnv {
   env_file?: string;
-  env_vars?:  {
+  env_vars?: {
     [key: string]: string;
   };
 }
