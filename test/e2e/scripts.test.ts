@@ -1,4 +1,4 @@
-import { assertEquals, assertStrContains } from "../../dev_deps.ts";
+import { assertEquals, assertStringContains } from "../../dev_deps.ts";
 import { testDenoXRun } from "../utils/denox-run.ts";
 
 Deno.test("Return an error when script doesn't exist", async () => {
@@ -7,7 +7,7 @@ Deno.test("Return an error when script doesn't exist", async () => {
     "test/fixture/single_script",
     async ({ code, errOutput }) => {
       assertEquals(code, 1);
-      assertStrContains(errOutput, '"not-found-script" not found');
+      assertStringContains(errOutput, '"not-found-script" not found');
     },
   );
 });
@@ -18,7 +18,7 @@ Deno.test("execute existing script", async () => {
     "test/fixture/single_script",
     async ({ code, output }) => {
       assertEquals(code, 0);
-      assertStrContains(output, "Hello World!");
+      assertStringContains(output, "Hello World!");
     },
   );
 });
@@ -29,7 +29,7 @@ Deno.test("execute existing script when multiple are specified", async () => {
     "test/fixture/multiple_scripts",
     async ({ code, output }) => {
       assertEquals(code, 0);
-      assertStrContains(output, "Hello World Develop!");
+      assertStringContains(output, "Hello World Develop!");
     },
   );
 });
