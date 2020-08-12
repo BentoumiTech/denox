@@ -69,42 +69,32 @@ type DenoRunParams = {
 async function _runDenoFileOrCommand(
   { scriptName, workspaceScript, workspaceGlobal, args, env }: DenoRunParams,
 ): Promise<{ code: number }> {
-  workspaceScript as WorkspaceScriptFile;
-  const command = (workspaceScript as WorkspaceScriptCommand).command;
-  const file = (workspaceScript as WorkspaceScriptFile).file;
-  if (file && command) {
+  const workspaceCommand = (workspaceScript as WorkspaceScriptCommand);
+  const workspaceFile = (workspaceScript as WorkspaceScriptFile);
+  if (workspaceFile.file && workspaceCommand.command) {
     throw new WorkspaceFileAndCommandSpecified(scriptName);
-  } else if (typeof file !== undefined) {
-    return await _runDenoFile(
-      {
-        workspaceScript: workspaceScript as WorkspaceScriptFile,
-        workspaceGlobal,
-        args,
-        env,
-      },
-    );
-  } else if (typeof command !== undefined) {
-    return await _runCommand(
-      { workspaceScript: workspaceScript as WorkspaceScriptCommand, args, env },
-    );
+  } else if (typeof workspaceFile.file !== undefined) {
+    return await _runDenoFile({ workspaceFile, workspaceGlobal, args, env });
+  } else if (typeof workspaceCommand.command !== undefined) {
+    return await _runCommand({ workspaceScript: workspaceCommand, args, env });
   }
   throw new WorkspaceMissingFileOrCommand(scriptName);
 }
 
 type DenoRunFileParams = {
-  workspaceScript: WorkspaceScriptFile;
+  workspaceFile: WorkspaceScriptFile;
   workspaceGlobal: WorkspaceOptions;
   args: string[];
   env?: { [key: string]: string };
 };
 
 async function _runDenoFile({
-  workspaceScript,
+  workspaceFile,
   workspaceGlobal,
   args,
   env,
 }: DenoRunFileParams): Promise<{ code: number }> {
-  const denoOptions = _getDenoOptions(workspaceScript, workspaceGlobal);
+  const denoOptions = _getDenoOptions(workspaceFile, workspaceGlobal);
   const process = Deno.run({
     // ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
     /* eslint @typescript-eslint/ban-ts-comment: "off" */
@@ -114,7 +104,7 @@ async function _runDenoFile({
       "deno",
       "run",
       ...denoOptions,
-      workspaceScript.file,
+      workspaceFile.file,
       ...args,
     ],
     env: env,
@@ -147,12 +137,12 @@ async function _runCommand({
 
 // get Env call parse env properties
 function _getDenoOptions(
-  workspaceScript: WorkspaceScript,
+  workspaceFile: WorkspaceScriptFile,
   workspaceGlobal: WorkspaceOptions,
 ): CLIArgument[] {
   return parseDenoOptions(
     workspaceGlobal,
-    workspaceScript,
+    workspaceFile,
   );
 }
 

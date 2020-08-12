@@ -15,9 +15,9 @@ interface WorkspaceOptions {
   deno_options?: DenoOptionsEntries;
 }
 
-interface WorkspaceScriptFile {
+type WorkspaceScriptFile = {
   file: string;
-}
+} & WorkspaceOptions;
 
 interface WorkspaceScriptCommand {
   command: string;
