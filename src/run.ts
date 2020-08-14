@@ -17,7 +17,11 @@ import {
   WorkspaceScript,
   WorkspaceScriptFile,
   WorkspaceScriptCommand,
+  WorkspaceEnv,
 } from "./interfaces.ts";
+import { DotenvConfig } from "../deps.ts";
+import { buildDenoEnv } from "./env/build_deno_env.ts";
+import { replaceCommandEnvVars } from "./env/parse.ts";
 
 async function run(scriptName: string): Promise<void> {
   try {
@@ -50,7 +54,7 @@ async function _runScript(
     throw new ScriptNotFoundError(scriptName);
   }
 
-  const env = {};
+  const env = _getDenoEnv(workspaceScript, workspaceGlobal);
   const args = Deno.args.slice(2);
 
   return await _runDenoFileOrCommand(
@@ -63,7 +67,7 @@ type DenoRunParams = {
   workspaceScript: WorkspaceScript;
   workspaceGlobal: WorkspaceOptions;
   args: string[];
-  env?: { [key: string]: string };
+  env: DotenvConfig;
 };
 
 async function _runDenoFileOrCommand(
@@ -85,7 +89,7 @@ type DenoRunFileParams = {
   workspaceFile: WorkspaceScriptFile;
   workspaceGlobal: WorkspaceOptions;
   args: string[];
-  env?: { [key: string]: string };
+  env: DotenvConfig;
 };
 
 async function _runDenoFile({
@@ -116,7 +120,7 @@ async function _runDenoFile({
 type DenoRunCommandParams = {
   workspaceScript: WorkspaceScriptCommand;
   args: string[];
-  env?: { [key: string]: string };
+  env: DotenvConfig;
 };
 
 async function _runCommand({
@@ -124,9 +128,10 @@ async function _runCommand({
   args,
   env,
 }: DenoRunCommandParams): Promise<{ code: number }> {
+  const commandWithEnvVars = replaceCommandEnvVars(workspaceScript.command, env)
   const process = Deno.run({
     cmd: [
-      workspaceScript.command,
+      commandWithEnvVars,
       ...args,
     ],
     env: env,
@@ -135,7 +140,16 @@ async function _runCommand({
   return { code };
 }
 
-// get Env call parse env properties
+function _getDenoEnv(
+  workspaceScript: WorkspaceEnv,
+  workspaceGlobal: WorkspaceEnv,
+): DotenvConfig {
+  return buildDenoEnv(
+    workspaceScript,
+    workspaceGlobal,
+  );
+}
+
 function _getDenoOptions(
   workspaceFile: WorkspaceScriptFile,
   workspaceGlobal: WorkspaceOptions,
