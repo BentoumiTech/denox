@@ -60,7 +60,8 @@ scripts:
     deno_options:
       v8-flags:
         - --regexp-tier-up
-        - --adjust-os-scheduling-parameters true
+        - --no-adjust-os-scheduling-parameters
+        - --testing-float-flag=3.14
       cached-only: true
       cert: ./files/test.cer
       no-remote: true
