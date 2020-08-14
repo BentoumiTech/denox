@@ -1,19 +1,31 @@
 import { CURRENT_VERSION, GITHUB_REPO_NAME } from "./const.ts";
 
 import * as consolex from "./utils/consolex.ts";
-import { ScriptNotFoundError } from "./utils/DenoXErrors.ts";
+import {
+  ScriptNotFoundError,
+  WorkspaceMissingFileOrCommand,
+  WorkspaceFileAndCommandSpecified,
+} from "./utils/DenoXErrors.ts";
 
 import { upgradeVersionMessage } from "./lib/upgrade_version.ts";
 
 import { loadDenoWorkspace } from "./parser/deno_workspace.ts";
 import { parseDenoOptions } from "./deno_options/parse.ts";
 import { CLIArgument } from "./deno_options/build_cli_arguments.ts";
-import { WorkspaceOptions, WorkspaceScript } from "./interfaces.ts";
+import {
+  WorkspaceOptions,
+  WorkspaceScript,
+  WorkspaceScriptFile,
+  WorkspaceScriptCommand,
+  WorkspaceEnv,
+} from "./interfaces.ts";
+import { DotenvConfig } from "../deps.ts";
+import { buildDenoEnv } from "./env/build_deno_env.ts";
+import { replaceCommandEnvVars } from "./env/parse.ts";
 
 async function run(scriptName: string): Promise<void> {
   try {
-    const args = Deno.args.slice(2);
-    const { code } = await _runScript(scriptName, args);
+    const { code } = await _runScript(scriptName);
 
     await upgradeVersionMessage(CURRENT_VERSION, GITHUB_REPO_NAME);
 
@@ -32,7 +44,6 @@ async function run(scriptName: string): Promise<void> {
 
 async function _runScript(
   scriptName: string,
-  args: string[],
 ): Promise<{ code: number }> {
   const workspace = await loadDenoWorkspace();
 
@@ -43,15 +54,51 @@ async function _runScript(
     throw new ScriptNotFoundError(scriptName);
   }
 
-  return await _runDenoFile(workspaceScript, workspaceGlobal, args);
+  const env = _getDenoEnv(workspaceScript, workspaceGlobal);
+  const args = Deno.args.slice(2);
+
+  return await _runDenoFileOrCommand(
+    { scriptName, workspaceScript, workspaceGlobal, args, env },
+  );
 }
 
-async function _runDenoFile(
-  workspaceScript: WorkspaceScript,
-  workspaceGlobal: WorkspaceOptions,
-  args: string[],
+type DenoRunParams = {
+  scriptName: string;
+  workspaceScript: WorkspaceScript;
+  workspaceGlobal: WorkspaceOptions;
+  args: string[];
+  env: DotenvConfig;
+};
+
+async function _runDenoFileOrCommand(
+  { scriptName, workspaceScript, workspaceGlobal, args, env }: DenoRunParams,
 ): Promise<{ code: number }> {
-  const denoOptions = await _getDenoOptions(workspaceScript, workspaceGlobal);
+  const workspaceCommand = (workspaceScript as WorkspaceScriptCommand);
+  const workspaceFile = (workspaceScript as WorkspaceScriptFile);
+  if (workspaceFile.file && workspaceCommand.command) {
+    throw new WorkspaceFileAndCommandSpecified(scriptName);
+  } else if (typeof workspaceFile.file !== undefined) {
+    return await _runDenoFile({ workspaceFile, workspaceGlobal, args, env });
+  } else if (typeof workspaceCommand.command !== undefined) {
+    return await _runCommand({ workspaceScript: workspaceCommand, args, env });
+  }
+  throw new WorkspaceMissingFileOrCommand(scriptName);
+}
+
+type DenoRunFileParams = {
+  workspaceFile: WorkspaceScriptFile;
+  workspaceGlobal: WorkspaceOptions;
+  args: string[];
+  env: DotenvConfig;
+};
+
+async function _runDenoFile({
+  workspaceFile,
+  workspaceGlobal,
+  args,
+  env,
+}: DenoRunFileParams): Promise<{ code: number }> {
+  const denoOptions = _getDenoOptions(workspaceFile, workspaceGlobal);
   const process = Deno.run({
     // ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
     /* eslint @typescript-eslint/ban-ts-comment: "off" */
@@ -61,22 +108,55 @@ async function _runDenoFile(
       "deno",
       "run",
       ...denoOptions,
-      workspaceScript.file,
+      workspaceFile.file,
       ...args,
     ],
+    env: env,
   });
   const { code } = await process.status();
-
   return { code };
 }
 
-async function _getDenoOptions(
-  workspaceScript: WorkspaceScript,
+type DenoRunCommandParams = {
+  workspaceScript: WorkspaceScriptCommand;
+  args: string[];
+  env: DotenvConfig;
+};
+
+async function _runCommand({
+  workspaceScript,
+  args,
+  env,
+}: DenoRunCommandParams): Promise<{ code: number }> {
+  const commandWithEnvVars = replaceCommandEnvVars(workspaceScript.command, env)
+  const process = Deno.run({
+    cmd: [
+      commandWithEnvVars,
+      ...args,
+    ],
+    env: env,
+  });
+  const { code } = await process.status();
+  return { code };
+}
+
+function _getDenoEnv(
+  workspaceScript: WorkspaceEnv,
+  workspaceGlobal: WorkspaceEnv,
+): DotenvConfig {
+  return buildDenoEnv(
+    workspaceScript,
+    workspaceGlobal,
+  );
+}
+
+function _getDenoOptions(
+  workspaceFile: WorkspaceScriptFile,
   workspaceGlobal: WorkspaceOptions,
-): Promise<CLIArgument[]> {
+): CLIArgument[] {
   return parseDenoOptions(
     workspaceGlobal,
-    workspaceScript,
+    workspaceFile,
   );
 }
 

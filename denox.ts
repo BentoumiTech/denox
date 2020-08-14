@@ -27,7 +27,7 @@ cli.on("command:*", () => {
 
 cli.example("denox run start");
 
-cli.help(() => ({}));
+cli.help();
 
 cli.version(CURRENT_VERSION);
 

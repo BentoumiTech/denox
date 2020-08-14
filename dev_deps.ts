@@ -4,9 +4,9 @@ export {
   assertEquals,
   assertArrayContains,
   assertThrows,
-  assertStrContains,
+  assertStringContains,
   assertThrowsAsync,
-} from "https://deno.land/std@0.50.0/testing/asserts.ts";
+} from "https://deno.land/std@0.60.0/testing/asserts.ts";
 
 export { stripColor } from "https://deno.land/std@0.61.0/fmt/colors.ts";
 

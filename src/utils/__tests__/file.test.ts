@@ -2,7 +2,7 @@ import {
   assertEquals,
   assertThrowsAsync,
   resolve,
-  assertStrContains,
+  assertStringContains,
 } from "../../../dev_deps.ts";
 import { getFileContent, getFirstExistingPath, exists } from "../file.ts";
 
@@ -11,7 +11,7 @@ Deno.test("read file", async () => {
     "./src/utils/__tests__/fixture/file.txt",
   );
 
-  assertStrContains(
+  assertStringContains(
     fileContent,
     "test file content",
   );

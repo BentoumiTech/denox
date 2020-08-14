@@ -1,18 +1,33 @@
+import { DotenvConfig } from "../deps.ts";
+
 type DenoOptionValue = unknown;
 
 type DenoOptionsEntries = {
   [key: string]: DenoOptionValue;
 };
 
-type WorkspaceOptions = {
-  deno_options?: DenoOptionsEntries;
-};
+interface WorkspaceEnv {
+  env_file?: string;
+  env_vars?: DotenvConfig;
+}
 
-type WorkspaceScript = {
+interface WorkspaceOptions {
+  deno_options?: DenoOptionsEntries;
+}
+
+type WorkspaceScriptFile = {
   file: string;
 } & WorkspaceOptions;
 
-type WorkspaceGlobal = WorkspaceOptions;
+interface WorkspaceScriptCommand {
+  command: string;
+}
+
+type WorkspaceScript =
+  & (WorkspaceScriptFile | WorkspaceScriptCommand)
+  & WorkspaceEnv;
+
+type WorkspaceGlobal = WorkspaceOptions & WorkspaceEnv;
 
 type DenoWorkspace = {
   scripts: {
@@ -26,6 +41,9 @@ export {
   WorkspaceGlobal,
   WorkspaceScript,
   WorkspaceOptions,
+  WorkspaceEnv,
+  WorkspaceScriptFile,
+  WorkspaceScriptCommand,
   DenoOptionsEntries,
   DenoOptionValue,
 };

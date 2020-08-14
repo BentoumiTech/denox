@@ -5,6 +5,6 @@
 		}
 	],
 	"settings": {
-		"deno.enabled": true
+		"deno.enable": true
 	}
 }

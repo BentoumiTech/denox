@@ -1,6 +1,6 @@
 import {
   assertEquals,
-  assertStrContains,
+  assertStringContains,
   resolve,
   stripColor,
   join,
@@ -16,31 +16,31 @@ Deno.test("permissions are applied", async () => {
       assertEquals(code, 0);
 
       output = stripColor(output);
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-env: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-hrtime: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-net: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-plugin: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-read: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-run: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-write: PermissionStatus { state: "granted" }',
       );
@@ -56,31 +56,31 @@ Deno.test("allow-all permissions are applied", async () => {
       assertEquals(code, 0);
 
       output = stripColor(output);
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-env: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-hrtime: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-net: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-plugin: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-read: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-run: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-write: PermissionStatus { state: "granted" }',
       );
@@ -96,31 +96,31 @@ Deno.test("false permissions are applied", async () => {
       assertEquals(code, 0);
 
       output = stripColor(output);
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-env: PermissionStatus { state: "prompt" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-hrtime: PermissionStatus { state: "prompt" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-net: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-plugin: PermissionStatus { state: "prompt" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-read: PermissionStatus { state: "granted" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-run: PermissionStatus { state: "prompt" }',
       );
-      assertStrContains(
+      assertStringContains(
         output,
         'allow-write: PermissionStatus { state: "granted" }',
       );
@@ -135,7 +135,7 @@ Deno.test("seed option is applied", async () => {
     async ({ output, code }) => {
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, "seed: 0.147205063401058");
+      assertStringContains(output, "seed: 0.147205063401058");
     },
   );
 });
@@ -147,7 +147,7 @@ Deno.test("quiet option is applied", async () => {
     async ({ output, code }) => {
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, "Only console.log\n");
+      assertStringContains(output, "Only console.log\n");
     },
   );
 });
@@ -171,7 +171,7 @@ Deno.test("log-level option is applied", async () => {
     async ({ code, output }) => {
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, "DEBUG JS");
+      assertStringContains(output, "DEBUG JS");
     },
   );
 });
@@ -183,7 +183,7 @@ Deno.test("config option is applied", async () => {
     async ({ code, output }) => {
       assertEquals(code, 0);
       output = stripColor(output);
-      assertStrContains(output, "tsconfig.json");
+      assertStringContains(output, "tsconfig.json");
     },
   );
 });
@@ -195,7 +195,7 @@ Deno.test("import map option is applied", async () => {
     async ({ code, errOutput }) => {
       assertEquals(code, 0);
       errOutput = stripColor(errOutput);
-      assertStrContains(
+      assertStringContains(
         errOutput,
         'ModuleSpecifier("https://deno.land/std/http/"',
       );
