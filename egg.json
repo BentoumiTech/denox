@@ -1,0 +1,10 @@
+{
+    "name": "denox",
+    "description": "Script runner and workspace configuration for Deno",
+    "homepage": "https://github.com/bentoumitech/denox",
+    "files": [
+    "./**/*.ts",
+    "README.md"
+    ],
+    "entry": "./mod.ts"
+}
