@@ -72,4 +72,6 @@ function _transformToArgHash(
   };
 }
 
-export { buildDenoCLIOptionsArgs, CLIArgument };
+export { buildDenoCLIOptionsArgs };
+
+export type { CLIArgument };
