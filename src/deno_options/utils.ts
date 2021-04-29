@@ -37,4 +37,6 @@ function _typeoffNumberAsString(value: unknown): TypeOfValues {
   return typeof value;
 }
 
-export { getOptionType, OptionTypeValues };
+export { getOptionType };
+
+export type { OptionTypeValues };
