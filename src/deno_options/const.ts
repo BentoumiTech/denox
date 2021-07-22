@@ -20,6 +20,7 @@ const optionsDefinitions: OptionsDefinitionsType = {
   "lock": { type: "string", spacer: "=" },
   "lock-write": { type: "boolean" },
   "log-level": { type: "string", spacer: "=" },
+  "no-check": { type: "boolean" },
   "no-remote": { type: "boolean" },
   "quiet": { type: "boolean" },
   "reload": { type: "string|boolean|string[]", spacer: "=" },
