@@ -39,4 +39,4 @@ async function exists(filename: string): Promise<boolean> {
   }
 }
 
-export { getFirstExistingPath, getFileContent, exists };
+export { exists, getFileContent, getFirstExistingPath };

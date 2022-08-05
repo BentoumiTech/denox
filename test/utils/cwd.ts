@@ -1,6 +1,4 @@
-import {
-  resolve,
-} from "../../dev_deps.ts";
+import { resolve } from "../../dev_deps.ts";
 
 async function changeAndRestoreCWD(
   directory: string,

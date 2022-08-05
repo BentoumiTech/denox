@@ -1,7 +1,7 @@
 import { optionsDefinitions } from "./const.ts";
 import {
-  DenoOptionNotRecognized,
   DenoOptionIncorrectType,
+  DenoOptionNotRecognized,
 } from "../utils/DenoXErrors.ts";
 import { getOptionType } from "./utils.ts";
 import { DenoOptionsEntries } from "../interfaces.ts";

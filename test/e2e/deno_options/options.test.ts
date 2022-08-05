@@ -1,9 +1,9 @@
 import {
   assertEquals,
   assertStrContains,
+  join,
   resolve,
   stripColor,
-  join,
 } from "../../../dev_deps.ts";
 import { testDenoXRun } from "../../utils/denox-run.ts";
 import { exists } from "../../../src/utils/file.ts";

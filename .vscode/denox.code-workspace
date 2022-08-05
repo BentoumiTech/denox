@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"deno.enabled": true
+		"deno.enable": true,
+		"editor.defaultFormatter": "denoland.vscode-deno"
 	}
 }

@@ -1,4 +1,4 @@
-import { assertEquals, assertArrayContains } from "../../../dev_deps.ts";
+import { assertArrayContains, assertEquals } from "../../../dev_deps.ts";
 import { buildDenoCLIOptionsArgs } from "../build_cli_arguments.ts";
 
 Deno.test("parse a single value CLI option", () => {
