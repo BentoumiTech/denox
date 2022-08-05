@@ -1,8 +1,8 @@
 import { assertThrows } from "../../../dev_deps.ts";
 import { validateOptions } from "../validate.ts";
 import {
-  DenoOptionNotRecognized,
   DenoOptionIncorrectType,
+  DenoOptionNotRecognized,
 } from "../../utils/DenoXErrors.ts";
 
 Deno.test("invalid option name error get thrown", () => {

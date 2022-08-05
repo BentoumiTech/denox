@@ -1,12 +1,12 @@
-import { parseYaml, YAMLError, extname } from "../../deps.ts";
+import { extname, parseYaml, YAMLError } from "../../deps.ts";
 
 import { DENO_WORKSPACE_FILES } from "../const.ts";
 import { DenoWorkspace } from "../interfaces.ts";
 
-import { getFirstExistingPath, getFileContent } from "../utils/file.ts";
+import { getFileContent, getFirstExistingPath } from "../utils/file.ts";
 import {
-  WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
+  WorkspaceNotFoundError,
 } from "../utils/DenoXErrors.ts";
 
 async function loadDenoWorkspace(): Promise<DenoWorkspace> {

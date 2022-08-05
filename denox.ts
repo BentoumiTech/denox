@@ -1,6 +1,7 @@
 import { cac } from "./deps.ts";
 
 import run from "./src/run.ts";
+import init from "./src/init.ts";
 import { error } from "./src/utils/consolex.ts";
 import { CURRENT_VERSION } from "./src/const.ts";
 
@@ -14,6 +15,18 @@ cli
   )
   .example("denox run start arg1 arg2 --namedArg=value")
   .action(run);
+
+cli
+  .command(
+    "init",
+    "Initialize a denox workspace",
+  )
+  .option("--yml, --yaml", "Use YAML for configuration")
+  .option("--json", "Use JSON for configuration")
+  .option("--ts, --typescript", "Use TypeScript for configuration")
+  .option("-f, --force", "Force creation of new workspace")
+  .example("deno init --json")
+  .action(init);
 
 // ToDO: remove '@ts-ignore' (and eslint directive) when vscode_deno is fixed to work with @deno_types; ref: <https://github.com/cacjs/cac/issues/75> , <https://github.com/denoland/vscode_deno/issues/21>
 /* eslint @typescript-eslint/ban-ts-comment: "off" */

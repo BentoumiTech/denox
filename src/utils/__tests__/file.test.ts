@@ -1,10 +1,10 @@
 import {
   assertEquals,
+  assertStrContains,
   assertThrowsAsync,
   resolve,
-  assertStrContains,
 } from "../../../dev_deps.ts";
-import { getFileContent, getFirstExistingPath, exists } from "../file.ts";
+import { exists, getFileContent, getFirstExistingPath } from "../file.ts";
 
 Deno.test("read file", async () => {
   const fileContent = await getFileContent(

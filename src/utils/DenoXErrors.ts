@@ -55,9 +55,9 @@ class DenoOptionIncorrectType extends DenoXError {
 }
 
 export {
-  ScriptNotFoundError,
-  WorkspaceNotFoundError,
-  WorkspaceFileIsMalformed,
-  DenoOptionNotRecognized,
   DenoOptionIncorrectType,
+  DenoOptionNotRecognized,
+  ScriptNotFoundError,
+  WorkspaceFileIsMalformed,
+  WorkspaceNotFoundError,
 };

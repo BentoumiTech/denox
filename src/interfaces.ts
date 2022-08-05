@@ -22,10 +22,10 @@ type DenoWorkspace = {
 };
 
 export type {
-  DenoWorkspace,
-  WorkspaceGlobal,
-  WorkspaceScript,
-  WorkspaceOptions,
   DenoOptionsEntries,
   DenoOptionValue,
+  DenoWorkspace,
+  WorkspaceGlobal,
+  WorkspaceOptions,
+  WorkspaceScript,
 };

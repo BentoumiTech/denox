@@ -1,11 +1,8 @@
-import {
-  assertEquals,
-  assertThrowsAsync,
-} from "../../../dev_deps.ts";
+import { assertEquals, assertThrowsAsync } from "../../../dev_deps.ts";
 import { loadDenoWorkspace } from "../deno_workspace.ts";
 import {
-  WorkspaceNotFoundError,
   WorkspaceFileIsMalformed,
+  WorkspaceNotFoundError,
 } from "../../utils/DenoXErrors.ts";
 import { changeAndRestoreCWD } from "../../../test/utils/cwd.ts";
 
